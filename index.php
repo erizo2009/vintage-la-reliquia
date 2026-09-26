@@ -26,6 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <h1>La Reliquia</h1>
         <h2>Iniciar sesión</h2>
+        
 
         <?php if ($mensaje != "") { ?>
             <p class="error"><?php echo $mensaje; ?></p>
