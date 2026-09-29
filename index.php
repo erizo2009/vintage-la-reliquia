@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="login-container">
 
-        <h1>La Reliquia</h1>
+        <h1>Sign Up To La Reliquia</h1>
         <h2>Iniciar sesión</h2>
         
 
