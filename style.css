@@ -20,7 +20,7 @@
             width: 100%;
             padding: 10px;
             margin-bottom: 20px;
-            border: none;
+            
             border-bottom: 2px solid #ccc;
             background: transparent;
             outline: none;
@@ -28,18 +28,20 @@
 .contraseña {
             width: 100%;
             padding: 10px;
-            margin-bottom: 20px;
-            border: none;
+            margin-bottom: 20px;           
             border-bottom: 2px solid #ccc;
             background: transparent;
             outline: none;
 }
 .boton {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            background: rgb(224, 147, 3);
-           
+    width: 180px;
+    height: 35px;
+    background: #d8b43c;
+    border-radius: 7px;
+    color: #604b08;
+    font-family: Georgia, serif;
+    font-size: 12px;
+    cursor: pointer;
 }
 
       

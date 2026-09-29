@@ -41,8 +41,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="contraseña">
  <input type="password" name="contraseña" placeholder="Contraseña" required>
 </div>
+
         <div class="boton">      
-<button type="submit">Sign Up</button>
+ <button>Iniciar Sesion</button>
 </div> 
 
     </div>
