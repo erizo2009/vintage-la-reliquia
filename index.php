@@ -34,10 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
        <form action="guardar.php" method="POST">
     
-        <div class="id">
- <input type="int" name="id" placeholder="ID" required>
-</div>
-
+       
         <div class="usuario">
  <input type="text" name="usuario" placeholder="Usuario" required>
 </div>
