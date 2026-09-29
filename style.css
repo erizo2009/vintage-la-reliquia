@@ -1,0 +1,18 @@
+.login-container {
+            width: 380px;
+            background: rgb(243, 232, 232);
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #e6e3de, #f8f7f2);
+            display: flex;
+            justify-content: center;
+
+        }
