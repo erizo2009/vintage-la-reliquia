@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div>
 
         <div class="boton">      
-    <a href="guardar.php" class="boton">Iniciar Sesión</a>
+    <a href="submit" class="boton">Iniciar Sesión</a>
 </div> 
 
     </div>
