@@ -15,7 +15,7 @@
 
         }
 
-        /* ===== BASE ===== */
+
 :root {
     --bordo: #55272a;
     --rojo-logo: #a3141d;
@@ -40,7 +40,7 @@ a {
     text-decoration: none;
 }
 
-/* ===== ENCABEZADO ===== */
+
 .encabezado {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
@@ -51,7 +51,7 @@ a {
     color: var(--crema);
 }
 
-/* Buscador */
+
 .buscador {
     display: flex;
     align-items: center;
@@ -81,7 +81,7 @@ a {
     cursor: pointer;
 }
 
-/* Logo */
+
 .logo {
     display: flex;
     flex-direction: column;
@@ -103,7 +103,7 @@ a {
     margin-top: -2px;
 }
 
-/* Cuenta y carrito */
+
 .acciones {
     display: flex;
     align-items: center;
@@ -124,7 +124,7 @@ a {
     margin-left: 8px;
 }
 
-/* ===== MENÚ ===== */
+
 .menu {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -141,7 +141,7 @@ a {
     color: var(--rojo-logo);
 }
 
-/* ===== CATÁLOGO ===== */
+
 .catalogo {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -186,7 +186,6 @@ a {
     font-weight: 500;
 }
 
-/* ===== CELULAR ===== */
 @media (max-width: 700px) {
     .encabezado {
         grid-template-columns: 1fr;
