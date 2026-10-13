@@ -1,0 +1,44 @@
+.login-container {
+            width: 380px;
+            background: rgb(243, 232, 232);
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(199, 6, 6, 0.555);
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            
+            display: flex;
+            justify-content: center;
+            
+
+        }
+.usuario {
+            width: 100%;
+            padding: 10px;
+            margin:auto;
+            background: transparent;
+            outline: none;
+        }
+.contraseña {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;           
+            border-bottom: 2px solid #ccc;
+            background: transparent;
+            outline: none;
+}
+.boton {
+    width: 180px;
+    height: 35px;
+    background: #d8b43c;
+    border-radius: 7px;
+    color: #604b08;
+    font-family: Georgia, serif;
+    font-size: 12px;
+    cursor: pointer;
+}
