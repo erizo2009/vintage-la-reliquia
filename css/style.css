@@ -16,28 +16,76 @@
             
 
         }
-.usuario {
-            width: 100%;
-            padding: 10px;
-            margin:auto;
-            background: transparent;
-            outline: none;
-        }
-.contraseña {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;           
-            border-bottom: 2px solid #ccc;
-            background: transparent;
-            outline: none;
+
+.titulo {
+font-size: 24px;
+font-weight: 400;
+text-align: center;
+margin: 0 0 36px;
 }
+
+.marca { 
+color: #3f0101; 
+font-weight: 600; 
+}
+
+.usuario {
+position: relative;
+margin-bottom: 28px;
+}
+
+.usuario label {
+position: absolute;
+top: -10px;
+left: 24px;
+padding: 0 8px;
+background: #fff;
+font-family: Georgia, serif;
+font-size: 13px;
+color: #604b08;
+}
+
+.usuario input {
+width: 100%;
+padding: 10px;
+margin-bottom: 20px;           
+border-bottom: 2px solid #ccc;
+background: transparent;
+outline: none;
+}
+
+.contraseña {
+position: relative;
+margin-bottom: 28px;
+}
+
+.contraseña label{
+position: absolute;
+top: -10px;
+left: 24px;
+padding: 0 8px;
+background: #fff;
+font-family: Georgia, serif;
+font-size: 13px;
+color: #604b08;
+}
+
+.contraseña input {
+width: 100%;
+padding: 10px;
+margin-bottom: 20px;           
+border-bottom: 2px solid #ccc;
+background: transparent;
+outline: none;    
+}
+
 .boton {
-    width: 180px;
-    height: 35px;
-    background: #d8b43c;
-    border-radius: 7px;
-    color: #604b08;
-    font-family: Georgia, serif;
-    font-size: 12px;
-    cursor: pointer;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    font-family: "Playfair Display", Georgia, serif;
+    color: #222;
 }
