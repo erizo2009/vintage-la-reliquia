@@ -99,4 +99,7 @@ body {
 
 .campo input:focus {
     box-shadow: 0 0 6px var(--dorado);
+    body {
+    background: red !important;
+}
 }
