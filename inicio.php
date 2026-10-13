@@ -28,10 +28,9 @@ $resultado = mysqli_query($conexion, $sql);
             <div class="logo-area">
             </div>
             <nav class="menu">
-            <form>
+
             <input type="text" name="q" placeholder="Buscar">
             <button type="submit">🔍</button>
-</form>
 
                 <ul>
                     <li><a href="#">INICIO</a></li>
