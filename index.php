@@ -22,9 +22,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
 
-    <div class="login-container">
+    <div class="login">
 
-        <h1>Sign Up To La Reliquia</h1>
+        <h1 class="titulo">Sign Up To <span class="marca">La Reliquia</span></h1>
         <h2>Iniciar sesión</h2>
         
 

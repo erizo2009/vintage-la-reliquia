@@ -1,38 +1,84 @@
-.login-container {
-            width: 380px;
-            background: rgb(243, 232, 232);
-            padding: 40px;
-            border-radius: 25px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+.login {
+             width: 340px;
+            padding: 40px 28px 24px;
+            background: #fff;
+            border: 2px solid var(--dorado-suave);
+            box-shadow: 0 6px 24px rgba(216, 180, 60, 0.25);
         }
 
         body {
+             margin: 0;
+            min-height: 100vh;
             display: flex;
-            justify-content: center;
             align-items: center;
-            height: 100vh;
-            background: linear-gradient(to right, #e6e3de, #f8f7f2);
-            display: flex;
             justify-content: center;
+            background: #fff;
+            font-family: "Playfair Display", Georgia, serif;
+            color: #222;
+        }
 
-        }
-.usuario {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            
-            border-bottom: 2px solid #ccc;
-            background: transparent;
-            outline: none;
-        }
-.contraseña {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;           
-            border-bottom: 2px solid #ccc;
-            background: transparent;
-            outline: none;
+.titulo {
+font-size: 24px;
+font-weight: 400;
+text-align: center;
+margin: 0 0 36px;
 }
+
+.marca { 
+color: #3f0101; 
+font-weight: 600; 
+}
+
+.usuario {
+position: relative;
+margin-bottom: 28px;
+}
+
+.usuario label {
+position: absolute;
+top: -10px;
+left: 24px;
+padding: 0 8px;
+background: #fff;
+font-family: Georgia, serif;
+font-size: 13px;
+color: #604b08;
+}
+
+.usuario input {
+width: 100%;
+padding: 10px;
+margin-bottom: 20px;           
+border-bottom: 2px solid #ccc;
+background: transparent;
+outline: none;
+}
+
+.contraseña {
+position: relative;
+margin-bottom: 28px;
+}
+
+.contraseña label{
+position: absolute;
+top: -10px;
+left: 24px;
+padding: 0 8px;
+background: #fff;
+font-family: Georgia, serif;
+font-size: 13px;
+color: #604b08;
+}
+
+.contraseña input {
+width: 100%;
+padding: 10px;
+margin-bottom: 20px;           
+border-bottom: 2px solid #ccc;
+background: transparent;
+outline: none;    
+}
+
 .boton {
     margin: 0;
     min-height: 100vh;
