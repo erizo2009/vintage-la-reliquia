@@ -38,7 +38,6 @@ $productos = [
             </button>
         </form>
 
-        <a href="tienda.php" class="logo">
     
             <span class="logo-texto">La Reliquia</span>
             <span class="logo-sub">antigüedades</span>
