@@ -26,25 +26,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <h1 class="titulo">Sign Up To <span class="marca">La Reliquia</span></h1>
         <h2>Iniciar sesión</h2>
-        
 
         <?php if ($mensaje != "") { ?>
             <p class="error"><?php echo $mensaje; ?></p>
         <?php } ?>
 
-       <form action="guardar.php" method="POST">
-    
-       
-        <div class="usuario">
- <input type="text" name="usuario" placeholder="Usuario" required>
-</div>
-        <div class="contraseña">
- <input type="password" name="contraseña" placeholder="Contraseña" required>
-</div>
+        <!-- LOGIN NORMAL -->
+        <form action="guardar.php" method="POST">
 
-        <div class="boton">      
-    <a href="submit" class="boton">Iniciar Sesión</a>
-</div> 
+            <div class="usuario">
+                <input type="text" name="usuario" placeholder="Usuario" required>
+            </div>
+
+            <div class="contraseña">
+                <input type="password" name="contraseña" placeholder="Contraseña" required>
+            </div>
+
+            <div class="boton">
+                <button type="submit">Iniciar sesión</button>
+            </div>
+
+        </form>
+
+        <p>o</p>
+
+        <!-- LOGIN CON GOOGLE -->
+        <div class="boton-google">
+            <a href="google_login.php">
+                Iniciar sesión con Google
+            </a>
+        </div>
 
     </div>
 
