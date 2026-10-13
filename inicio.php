@@ -1,17 +1,17 @@
 <?php
 session_start();
 
-// Si la persona inició sesión, guardamos su nombre
+
 $usuario = $_SESSION["usuario"] ?? "";
 
 // Lista de productos: para agregar uno nuevo, copiá una línea y cambiá los datos
 $productos = [
-    ["foto" => "img/sillas-luis-xv.jpg",       "nombre" => "Par de sillas estilo Luis XV",            "precio" => "$750.000 ars"],
-    ["foto" => "img/mesa-caoba.jpg",           "nombre" => "Mesa antigua de caoba",                   "precio" => "$300.000 ars"],
-    ["foto" => "img/mesa-redonda-marmol.jpg",  "nombre" => "",                                        "precio" => ""],
-    ["foto" => "img/mesa-nodal-marmol.jpg",    "nombre" => "Mesa en Nodal y Mármol",                  "precio" => "$500.000 ars"],
-    ["foto" => "img/mesa-oriental.jpg",        "nombre" => "Mesa oriental siglo XV en nodal y oro",   "precio" => "$700.000 ars"],
-    ["foto" => "img/mesas-de-luz.jpg",         "nombre" => "",                                        "precio" => ""],
+    ["foto" => "<img src="img/sillas.jpg" alt="Par de sillas estilo Luis XV">",     "nombre" => "Par de sillas estilo Luis XV",            "precio" => "$750.000 ars"],
+    ["foto" => "<img src="img/mesita.jpg" alt="Mesa antigua de caoba">",           "nombre" => "Mesa antigua de caoba",                   "precio" => "$300.000 ars"],
+    ["foto" => "<img src="img/mesa.jpg" alt="Mesa redonda de mármol">",  "nombre" => "",                                        "precio" => ""],
+    ["foto" => "<img src="img/estantes.jpg" alt="Mesa en Nodal y Mármol">",    "nombre" => "Mesa en Nodal y Mármol",                  "precio" => "$500.000 ars"],
+    ["foto" => "<img src="img/mesagrande.jpg" alt="Mesa oriental siglo XV en nodal y oro">",        "nombre" => "Mesa oriental siglo XV en nodal y oro",   "precio" => "$700.000 ars"],
+    ["foto" => "<img src="img/banquito.jpg" alt="Mesas de luz">",         "nombre" => "",                                        "precio" => ""],
 ];
 ?>
 <!DOCTYPE html>
@@ -25,7 +25,7 @@ $productos = [
 </head>
 <body>
 
-    <!-- ENCABEZADO -->
+    
     <header class="encabezado">
 
         <form class="buscador" action="tienda.php" method="GET">
@@ -39,8 +39,7 @@ $productos = [
         </form>
 
         <a href="tienda.php" class="logo">
-            <!-- Si tenés el logo como imagen, descomentá la línea de abajo y borrá los dos <span> -->
-            <!-- <img src="img/logo.png" alt="La Reliquia antigüedades"> -->
+    
             <span class="logo-texto">La Reliquia</span>
             <span class="logo-sub">antigüedades</span>
         </a>
