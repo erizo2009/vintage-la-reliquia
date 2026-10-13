@@ -47,29 +47,23 @@ $resultado = mysqli_query($conexion, $sql);
     <main class="productos">
 
         <?php
-        // Si no hay ningún producto, avisamos
+       
         if (mysqli_num_rows($resultado) == 0) {
             echo "<p class='aviso'>No se encontraron productos.</p>";
         }
 
-        // Este "while" repite el bloque de abajo UNA VEZ POR CADA producto.
-        // En cada vuelta, $producto tiene los datos de un producto.
         while ($producto = mysqli_fetch_assoc($resultado)) {
         ?>
 
             <div class="producto">
-                <!-- La foto: viene de la carpeta "img" -->
+                
                <img src="img/silla.jpg" alt="<?php echo $producto['nombre']; ?>">
-
-                <!-- El nombre -->
-                <p class="nombre"><?php echo $producto['nombre']; ?></p>
-
-                <!-- El precio (number_format le pone los puntos: 750.000) -->
-                <p class="precio">$<?php echo number_format($producto['precio'], 0, ',', '.'); ?> ars</p>
+                <p class="nombre"><?php echo $producto['sillas']; ?></p>
+                <p class="precio">$<?php echo number_format($producto['75.000'], 3, ',', '.'); ?> ars</p>
             </div>
 
         <?php
-        } // aquí termina el while
+        }
         ?>
 
     </main>
