@@ -6,8 +6,8 @@ $usuario = $_SESSION["usuario"] ?? "";
 
 
 $productos = [
-    
-                                        
+    ["foto" => "IMAGENES.VINTAGE/whatsapp.png", "nombre" => "Producto 1", "precio" => "$100.000 ars"],
+    ["foto" => "IMAGENES.VINTAGE/whatsapp.png", "nombre" => "Producto 2", "precio" => "$200.000 ars"],
 ];
 ?>
 <!DOCTYPE html>
