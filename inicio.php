@@ -6,12 +6,12 @@ $usuario = $_SESSION["usuario"] ?? "";
 
 // Lista de productos: para agregar uno nuevo, copiá una línea y cambiá los datos
 $productos = [
-    ["foto" => "<img src="img/sillas.jpg" alt="Par de sillas estilo Luis XV">",     "nombre" => "Par de sillas estilo Luis XV",            "precio" => "$750.000 ars"],
-    ["foto" => "<img src="img/mesita.jpg" alt="Mesa antigua de caoba">",           "nombre" => "Mesa antigua de caoba",                   "precio" => "$300.000 ars"],
-    ["foto" => "<img src="img/mesa.jpg" alt="Mesa redonda de mármol">",  "nombre" => "",                                        "precio" => ""],
-    ["foto" => "<img src="img/estantes.jpg" alt="Mesa en Nodal y Mármol">",    "nombre" => "Mesa en Nodal y Mármol",                  "precio" => "$500.000 ars"],
-    ["foto" => "<img src="img/mesagrande.jpg" alt="Mesa oriental siglo XV en nodal y oro">",        "nombre" => "Mesa oriental siglo XV en nodal y oro",   "precio" => "$700.000 ars"],
-    ["foto" => "<img src="img/banquito.jpg" alt="Mesas de luz">",         "nombre" => "",                                        "precio" => ""],
+    ["foto" => "img/sillas.jpg", "nombre" => "Par de sillas estilo Luis XV", "precio" => "$750.000 ars"],
+    ["foto" => "img/mesa.jpg", "nombre" => "Lámpara de bronce y cristal", "precio" => "$250.000 ars"],
+    ["foto" => "img/mesita.jpg", "nombre" => "Reloj de pared antiguo", "precio" => "$150.000 ars"],
+    ["foto" => "img/banquito.jpg", "nombre" => "Mesa de comedor estilo Art Deco", "precio" => "$1.200.000 ars"],
+    ["foto" => "img/estantes.jpg", "nombre" => "Cuadro al óleo del siglo XIX", "precio" => "$500.000 ars"],
+    ["foto" => "img/mesagrande.jpg", "nombre" => "mesa grande para comedor", "precio" => ""],
 ];
 ?>
 <!DOCTYPE html>
