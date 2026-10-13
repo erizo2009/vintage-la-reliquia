@@ -16,76 +16,87 @@
             
 
         }
-
-.titulo {
-font-size: 24px;
-font-weight: 400;
-text-align: center;
-margin: 0 0 36px;
+:root {
+    --dorado: #d4af37;
+    --dorado-oscuro: #c9a24a;
+    --rojo: #8b0000;
+    --negro: #111111;
 }
-
-.marca { 
-color: #3f0101; 
-font-weight: 600; 
-}
-
-.usuario {
-position: relative;
-margin-bottom: 28px;
-}
-
-.usuario label {
-position: absolute;
-top: -10px;
-left: 24px;
-padding: 0 8px;
-background: #fff;
-font-family: Georgia, serif;
-font-size: 13px;
-color: #604b08;
-}
-
-.usuario input {
-width: 100%;
-padding: 10px;
-margin-bottom: 20px;           
-border-bottom: 2px solid #ccc;
-background: transparent;
-outline: none;
-}
-
-.contraseña {
-position: relative;
-margin-bottom: 28px;
-}
-
-.contraseña label{
-position: absolute;
-top: -10px;
-left: 24px;
-padding: 0 8px;
-background: #fff;
-font-family: Georgia, serif;
-font-size: 13px;
-color: #604b08;
-}
-
-.contraseña input {
-width: 100%;
-padding: 10px;
-margin-bottom: 20px;           
-border-bottom: 2px solid #ccc;
-background: transparent;
-outline: none;    
-}
-
-.boton {
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Playfair Display", serif;
+    background: white;
     min-height: 100vh;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #fff;
-    font-family: "Playfair Display", Georgia, serif;
-    color: #222;
+    justify-content: center;   
+    align-items: center;      
+    padding: 20px;
+}
+
+.tarjeta {
+    width: 100%;
+    max-width: 390px;
+    background: white;
+    border: 4px double var(--dorado-oscuro);
+    box-shadow: 0 0 18px rgba(212, 175, 55, 0.35);
+    padding: 60px 22px 30px;
+    text-align: center;
+}
+
+
+.titulo {
+    font-size: 30px;
+    font-weight: 400;
+    color: var(--negro);
+    margin-bottom: 45px;
+}
+
+.titulo .marca {
+    font-family: "Pathway Gothic One", sans-serif;
+    color: var(--rojo);
+    font-size: 38px;
+}
+
+.titulo .sub {
+    font-family: "Pathway Gothic One", sans-serif;
+    color: var(--negro);
+    font-size: 15px;
+}
+
+.campo {
+    position: relative;
+    margin-bottom: 38px;
+}
+
+.campo label {
+    position: absolute;
+    top: -14px;
+    left: 45px;
+    background: white;
+    padding: 0 10px;
+    font-family: "Pathway Gothic One", sans-serif;
+    font-size: 21px;
+    color: var(--negro);
+}
+
+.campo input {
+    width: 100%;
+    height: 38px;
+    border: 1.5px solid var(--dorado-oscuro);
+    border-radius: 8px;
+    padding: 0 50px;
+    font-family: inherit;
+    font-size: 16px;
+    color: var(--negro);
+    outline: none;
+    background: white;
+}
+
+.campo input:focus {
+    box-shadow: 0 0 6px var(--dorado);
 }
