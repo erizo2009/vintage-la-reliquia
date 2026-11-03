@@ -55,23 +55,14 @@ if (isset($_GET["registrado"])) {
 
   <div class="divider"><span>Sign Up with</span></div>
 
-  <div class="social">
-    <button type="button" class="social-btn" aria-label="Registrarse con Gmail">
-      <svg viewBox="0 0 24 24" width="28" height="28" fill="none">
-        <path d="M3.5 19V6.5" stroke="#4285F4" stroke-width="3"/>
-        <path d="M20.5 19V6.5" stroke="#34A853" stroke-width="3"/>
-        <path d="M3.5 6.5 12 13l8.5-6.5" stroke="#EA4335" stroke-width="3"/>
-        <path d="M20.5 6.5V9" stroke="#FBBC04" stroke-width="3"/>
-    </svg>
-    <div class="boton-google">
+   <div class="boton-google">
             <a href="google_login.php">Iniciar sesión con Google</a>
         </div>
 
         <p><a href="registro.php">¿No tenés cuenta? Crear cuenta</a></p>
 
     </div>
-    </button>
-  </div>
+   
 
   <p class="footer">¿No tienes cuenta? <a href="#">Log In</a></p>
 </main>
