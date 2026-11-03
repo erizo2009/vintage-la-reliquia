@@ -1,16 +1,33 @@
 <?php
 session_start();
+require_once __DIR__ . '/conexion.php';
 
 $mensaje = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
-    $usuario = $_POST["usuario"];
-    $contraseña = $_POST["contraseña"];
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $usuario  = trim($_POST["usuario"] ?? "");
+    $password = $_POST["password"] ?? "";
 
+    $stmt = $conexion->prepare("SELECT id, password FROM usuarios WHERE usuario = ?");
+    $stmt->bind_param("s", $usuario);
+    $stmt->execute();
+    $res = $stmt->get_result();
+
+    if ($fila = $res->fetch_assoc()) {
+        if (password_verify($password, $fila["password"])) {
+            session_regenerate_id(true);
+            $_SESSION["usuario_id"] = $fila["id"];
+            header("Location: inicio.php");
+            exit;
+        }
+    }
+    $mensaje = "Usuario o contraseña incorrectos";
+}
+
+if (isset($_GET["registrado"])) {
+    $mensaje = "Cuenta creada, ya podés iniciar sesión";
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -24,22 +41,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="login">
 
-        <h1 class="titulo">Sign Up To <span class="marca">La Reliquia</span></h1>
+        <h1 class="titulo">Bienvenido a <span class="marca">La Reliquia</span></h1>
         <h2>Iniciar sesión</h2>
 
-        <?php if ($mensaje != "") { ?>
-            <p class="error"><?php echo $mensaje; ?></p>
+        <?php if ($mensaje !== "") { ?>
+            <p class="error"><?php echo htmlspecialchars($mensaje); ?></p>
         <?php } ?>
 
-        
-        <form action="guardar.php" method="POST">
+        <form action="index.php" method="POST">
 
             <div class="usuario">
                 <input type="text" name="usuario" placeholder="Usuario" required>
             </div>
 
             <div class="contraseña">
-                <input type="password" name="contraseña" placeholder="Contraseña" required>
+                <input type="password" name="password" placeholder="Contraseña" required>
             </div>
 
             <div class="boton">
@@ -49,12 +65,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <p>o</p>
 
-      
         <div class="boton-google">
-            <a href="google_login.php">
-                Iniciar sesión con Google
-            </a>
+            <a href="google_login.php">Iniciar sesión con Google</a>
         </div>
+
+        <p><a href="registro.php">¿No tenés cuenta? Crear cuenta</a></p>
 
     </div>
 
