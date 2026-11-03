@@ -1,109 +1,79 @@
 <?php
 session_start();
-require_once __DIR__ . '/conexion.php';
 
-// ---- Retorno de Google: Google vuelve acá con ?code=... ----
-if (isset($_GET["code"])) {
-    require_once __DIR__ . '/google_config.php';
+// Categorías: nombre que se ve, archivo de imagen (carpeta img/) y filtro para productos.php
+$categorias = [
+  ['Comedor',               'comedor.png',     'comedor'],
+  ['Dormitorio',            'dormitorio.png',  'dormitorio'],
+  ['Living',                'living.png',      'living'],
+  ['Vitrinas y guardado',   'vitrinas.png',    'vitrinas'],
+  ['Escritorios y ficheros','escritorios.png', 'escritorios'],
+  ['Iluminación',           'iluminacion.png', 'iluminacion'],
+];
 
-    $token = $client->fetchAccessTokenWithAuthCode($_GET["code"]);
-
-    if (!isset($token["error"])) {
-        $client->setAccessToken($token);
-        $oauth = new Google\Service\Oauth2($client);
-        $info  = $oauth->userinfo->get();
-        $email = $info->email;
-
-        // Buscar o crear el usuario usando su email
-        $stmt = $conexion->prepare("SELECT id FROM usuarios WHERE usuario = ?");
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $res = $stmt->get_result();
-
-        if ($fila = $res->fetch_assoc()) {
-            $id = $fila["id"];
-        } else {
-            $hash = password_hash(bin2hex(random_bytes(16)), PASSWORD_DEFAULT);
-            $stmt = $conexion->prepare("INSERT INTO usuarios (usuario, password) VALUES (?, ?)");
-            $stmt->bind_param("ss", $email, $hash);
-            $stmt->execute();
-            $id = $conexion->insert_id;
-        }
-
-        session_regenerate_id(true);
-        $_SESSION["usuario_id"] = $id;
-        header("Location: inicio.php");
-        exit;
-    }
-
-    header("Location: index.php");
-    exit;
-}
-
-// ---- Proteger la página ----
-if (!isset($_SESSION["usuario_id"])) {
-    header("Location: index.php");
-    exit;
-}
-
-// ---- Búsqueda (consulta preparada) ----
-$buscar = trim($_GET["q"] ?? "");
-
-if ($buscar === "") {
-    $resultado = $conexion->query("SELECT * FROM productos");
-} else {
-    $like = "%" . $buscar . "%";
-    $stmt = $conexion->prepare("SELECT * FROM productos WHERE nombre LIKE ?");
-    $stmt->bind_param("s", $like);
-    $stmt->execute();
-    $resultado = $stmt->get_result();
-}
+// Cambiá 'usuario' por la variable de sesión que uses al iniciar sesión
+$logueado = isset($_SESSION['usuario']);
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>La Reliquia - Antigüedades</title>
-    <link rel="stylesheet" href="css/style2.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>La Reliquia - Antigüedades</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Almendra:wght@400;700&family=Montserrat:wght@800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
-    <header class="header">
-        <div class="container">
-            <div class="logo-area"></div>
-            <nav class="menu">
 
-                <form method="GET" action="inicio.php">
-                    <input type="text" name="q" placeholder="Buscar" value="<?php echo htmlspecialchars($buscar); ?>">
-                    <button type="submit">🔍</button>
-                </form>
+<header class="topbar">
+  <form class="buscador" action="productos.php" method="get" role="search">
+    <input type="search" name="q" placeholder="Buscar" aria-label="Buscar">
+    <button type="submit" aria-label="Buscar">
+      <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+        <circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/>
+      </svg>
+    </button>
+  </form>
 
-                <ul>
-                    <li><a href="inicio.php">INICIO</a></li>
-                    <li><a href="inicio.php">PRODUCTOS</a></li>
-                    <li><a href="#">CONTACTOS</a></li>
-                    <li><a href="logout.php">CERRAR SESION</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+  <a class="logo" href="inicio.php">
+    <img src="img/logo.png" alt="La Reliquia antigüedades">
+  </a>
 
-    <main class="productos">
+  <div class="acciones">
+    <?php if ($logueado): ?>
+      <a href="cerrar_sesion.php">Cerrar sesión</a>
+    <?php else: ?>
+      <a href="registro.php">Crear cuenta</a>
+      <span class="sep" aria-hidden="true"></span>
+      <a href="login.php">Iniciar sesión</a>
+    <?php endif; ?>
+    <a class="carrito" href="carrito.php" aria-label="Carrito">
+      <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 3h3l2.6 12.2a1 1 0 0 0 1 .8h9.4a1 1 0 0 0 1-.8L21 7H6"/>
+        <circle cx="9.5" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/>
+      </svg>
+    </a>
+  </div>
+</header>
 
-        <?php if ($resultado->num_rows === 0) { ?>
-            <p class="aviso">No se encontraron productos.</p>
-        <?php } ?>
+<nav class="menu" aria-label="Principal">
+  <a href="inicio.php">Inicio</a>
+  <a href="productos.php">Productos</a>
+  <a href="contacto.php">Contacto</a>
+</nav>
 
-        <?php while ($producto = $resultado->fetch_assoc()) {
-            $imagen = !empty($producto["imagen"]) ? $producto["imagen"] : "img/silla.jpg";
-        ?>
-            <div class="producto">
-                <img src="<?php echo htmlspecialchars($imagen); ?>" alt="<?php echo htmlspecialchars($producto["nombre"]); ?>">
-                <p class="nombre"><?php echo htmlspecialchars($producto["nombre"]); ?></p>
-                <p class="precio">$<?php echo number_format($producto["precio"], 0, ",", "."); ?> ars</p>
-            </div>
-        <?php } ?>
+<main>
+  <form class="categorias" action="productos.php" method="get">
+    <?php foreach ($categorias as [$nombre, $imagen, $filtro]): ?>
+      <button class="tarjeta" type="submit" name="categoria" value="<?= htmlspecialchars($filtro) ?>">
+        <img src="img/<?= htmlspecialchars($imagen) ?>" alt="">
+        <span><?= htmlspecialchars($nombre) ?></span>
+      </button>
+    <?php endforeach; ?>
+  </form>
+</main>
 
-    </main>
 </body>
 </html>
