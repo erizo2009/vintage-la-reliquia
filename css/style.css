@@ -22,7 +22,7 @@ body {
     font-family: 'Playfair Display', Georgia, serif;
 }
 
-
+/* ---------- Tarjeta con doble borde dorado ---------- */
 .login {
     width: 100%;
     max-width: 425px;
@@ -34,12 +34,12 @@ body {
     box-shadow: inset 0 0 0 6px #fff, inset 0 0 0 7px #e0c25a;
 }
 
-
+/* ---------- Título ---------- */
 .titulo {
     font-size: 2rem;
     font-weight: 400;
     white-space: nowrap;
-    margin-bottom: 44px;
+    margin-bottom: 58px;
 }
 
 .marca {
@@ -51,13 +51,13 @@ body {
 
 .marca small {
     color: var(--texto);
-    font-size: .55rem;
+    font-size: .7rem;
     letter-spacing: -.3px;
     margin-left: 2px;
     vertical-align: -0.5em;
 }
 
-
+/* ---------- Mensajes ---------- */
 .mensaje {
     font-size: .9rem;
     color: #a40000;
@@ -68,7 +68,7 @@ body {
     color: #2e7d32;
 }
 
-
+/* ---------- Campos con marco ornamental ---------- */
 .campo {
     position: relative;
     height: 42px;
@@ -76,13 +76,13 @@ body {
     border: 1.5px solid var(--oro);
     border-radius: 10px;
 
-    
+    /* 4 líneas verticales (2 por lado) */
     background-image:
         linear-gradient(var(--oro), var(--oro)),
         linear-gradient(var(--oro), var(--oro)),
         linear-gradient(var(--oro), var(--oro)),
         linear-gradient(var(--oro), var(--oro));
-    background-size: 1px 100%;
+    background-size: 1.5px 100%;
     background-repeat: no-repeat;
     background-origin: border-box;
     background-position:
@@ -92,7 +92,7 @@ body {
         calc(100% - 25px) 0;
 }
 
-
+/* cuadradito con punto, a cada lado */
 .campo::before,
 .campo::after {
     content: "";
@@ -110,7 +110,7 @@ body {
 .campo::before { left: 11px; }
 .campo::after  { right: 11px; }
 
-
+/* etiqueta que "corta" el borde superior */
 .campo label {
     position: absolute;
     top: -.75em;
@@ -141,7 +141,7 @@ body {
     box-shadow: 0 0 0 3px rgba(212, 175, 55, .25);
 }
 
-
+/* ---------- Botón principal ---------- */
 .boton {
     margin-top: 30px;
 }
@@ -164,7 +164,7 @@ body {
     background: var(--oro-oscuro);
 }
 
-
+/* ---------- Separador "Sign Up with" ---------- */
 .separador {
     display: flex;
     align-items: center;
@@ -183,7 +183,7 @@ body {
     border-bottom: 1px solid var(--oro);
 }
 
-
+/* ---------- Íconos sociales ---------- */
 .redes {
     display: flex;
     justify-content: center;
@@ -207,7 +207,7 @@ body {
     height: 100%;
 }
 
-
+/* ---------- Pie ---------- */
 .pie {
     font-size: .9rem;
 }
@@ -221,6 +221,7 @@ body {
     text-decoration: underline;
 }
 
+/* ---------- Celulares ---------- */
 @media (max-width: 480px) {
     .login  { padding: 50px 18px 28px; }
     .titulo { font-size: 1.5rem; }
