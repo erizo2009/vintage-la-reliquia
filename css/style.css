@@ -1,229 +1,225 @@
 :root {
-    --oro: #d4af37;
-    --oro-oscuro: #bf9b27;
-    --rojo: #9b0d14;
-    --texto: #1a1a1a;
+  --gold: #d4af37;
+  --gold-soft: #ecd88f;
+  --gold-dark: #c8893f;
+  --red: #a30f14;
+  --ink: #111;
+  --paper: #fff;
+  --serif: "Playfair Display", Georgia, serif;
+  --tall: "Cormorant Garamond", "Playfair Display", Georgia, serif;
 }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
 
 body {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    background: #fff;
-    color: var(--texto);
-    font-family: 'Playfair Display', Georgia, serif;
+  display: grid;
+  place-items: center;
+  padding: 24px 16px;
+  background: var(--paper);
+  font-family: var(--serif);
+  color: var(--ink);
 }
 
-/* ---------- Tarjeta con doble borde dorado ---------- */
-.login {
-    width: 100%;
-    max-width: 425px;
-    padding: 70px 28px 34px;
-    text-align: center;
-    background: #fff;
-    border: 3px solid transparent;
-    border-image: linear-gradient(135deg, #b8772f, #ecd47e 50%, #b8772f) 1;
-    box-shadow: inset 0 0 0 6px #fff, inset 0 0 0 7px #e0c25a;
+/* ---------- Tarjeta: marco dorado + marco interior degradado ---------- */
+.card {
+  position: relative;
+  width: 100%;
+  max-width: 424px;
+  height: 614px;
+  padding: 78px 20px 0;
+  background: var(--paper);
+  border: 2px solid var(--gold-dark);
+  display: flex;
+  flex-direction: column;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px solid transparent;
+  border-image: linear-gradient(135deg, #e2c35a, #fff6cf 45%, #e2c35a) 1;
+  pointer-events: none;
 }
 
 /* ---------- Título ---------- */
-.titulo {
-    font-size: 2rem;
-    font-weight: 400;
-    white-space: nowrap;
-    margin-bottom: 58px;
+.title {
+  margin: 0 0 80px;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  white-space: nowrap;
+  font-weight: 400;
+  font-size: 1.75rem;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
 }
 
-.marca {
-    color: var(--rojo);
-    font-size: 2.1rem;
-    letter-spacing: -1.5px;
-    margin-left: 2px;
+.brand {
+  color: var(--red);
+  font-family: var(--tall);
+  font-weight: 700;
+  font-size: 2rem;
+  letter-spacing: -0.03em;
+  display: inline-flex;
+  align-items: flex-end;
 }
 
-.marca small {
-    color: var(--texto);
-    font-size: .7rem;
-    letter-spacing: -.3px;
-    margin-left: 2px;
-    vertical-align: -0.5em;
+.brand small {
+  margin-left: 2px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  position: relative;
+  top: 4px;
 }
 
-/* ---------- Mensajes ---------- */
-.mensaje {
-    font-size: .9rem;
-    color: #a40000;
-    margin: -24px 0 28px;
+.title img { height: 52px; width: auto; }
+
+/* ---------- Campos ---------- */
+.form { display: flex; flex-direction: column; }
+
+.field {
+  position: relative;
+  height: 40px;
+  margin: 0 2px 43px;
+  border: 1.5px solid var(--gold);
+  border-radius: 9px;
+  /* rieles verticales dobles a cada lado */
+  background:
+    linear-gradient(var(--gold), var(--gold)) 17px 0 / 1.5px 100% no-repeat,
+    linear-gradient(var(--gold), var(--gold)) 25px 0 / 1.5px 100% no-repeat,
+    linear-gradient(var(--gold), var(--gold)) calc(100% - 17px) 0 / 1.5px 100% no-repeat,
+    linear-gradient(var(--gold), var(--gold)) calc(100% - 25px) 0 / 1.5px 100% no-repeat;
 }
 
-.mensaje.ok {
-    color: #2e7d32;
+/* cuadrado con punto central sobre los rieles */
+.field::before,
+.field::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 15px;
+  height: 15px;
+  transform: translateY(-50%);
+  border: 1.5px solid var(--gold);
+  border-radius: 3px;
+  background: radial-gradient(circle, var(--gold) 0 3px, transparent 3.5px), var(--paper);
+}
+.field::before { left: 13px; }
+.field::after  { right: 13px; }
+
+.field label {
+  position: absolute;
+  z-index: 2;
+  top: -14px;
+  left: 50px;
+  padding: 0 12px;
+  background: var(--paper);
+  font-family: var(--tall);
+  font-weight: 600;
+  font-size: 1.35rem;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--ink);
 }
 
-/* ---------- Campos con marco ornamental ---------- */
-.campo {
-    position: relative;
-    height: 42px;
-    margin-bottom: 38px;
-    border: 1.5px solid var(--oro);
-    border-radius: 10px;
-
-    /* 4 líneas verticales (2 por lado) */
-    background-image:
-        linear-gradient(var(--oro), var(--oro)),
-        linear-gradient(var(--oro), var(--oro)),
-        linear-gradient(var(--oro), var(--oro)),
-        linear-gradient(var(--oro), var(--oro));
-    background-size: 1.5px 100%;
-    background-repeat: no-repeat;
-    background-origin: border-box;
-    background-position:
-        18px 0,
-        24px 0,
-        calc(100% - 19px) 0,
-        calc(100% - 25px) 0;
+.field input {
+  position: absolute;
+  z-index: 1;
+  left: 42px;
+  right: 42px;
+  top: 2px;
+  bottom: 2px;
+  width: auto;
+  padding: 0 8px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 1rem;
+  color: var(--ink);
 }
 
-/* cuadradito con punto, a cada lado */
-.campo::before,
-.campo::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    width: 18px;
-    height: 18px;
-    transform: translateY(-50%);
-    border: 1.5px solid var(--oro);
-    border-radius: 4px;
-    background: radial-gradient(circle, var(--oro) 0 3px, #fff 3.5px);
-    pointer-events: none;
+.field:focus-within { box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.28); }
+
+/* ---------- Botón ---------- */
+.btn {
+  margin: 28px -2px 0;
+  height: 40px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--gold);
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  cursor: pointer;
+}
+.btn:hover { background: #c6a22b; }
+
+.btn:focus-visible,
+.social-btn:focus-visible,
+.footer a:focus-visible { outline: 2px solid var(--gold-dark); outline-offset: 3px; }
+
+/* ---------- Separador ---------- */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 30px 4px 0;
+  color: var(--gold);
+  font-size: 1.05rem;
+  white-space: nowrap;
 }
 
-.campo::before { left: 11px; }
-.campo::after  { right: 11px; }
-
-/* etiqueta que "corta" el borde superior */
-.campo label {
-    position: absolute;
-    top: -.75em;
-    left: 50px;
-    padding: 0 12px;
-    background: #fff;
-    font-size: 1.05rem;
-    line-height: 1.2;
-    letter-spacing: -.4px;
-    z-index: 2;
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 6px;
+  border-top: 1.5px solid var(--gold);
+  border-bottom: 1.5px solid var(--gold);
+  margin-top: 6px;
 }
 
-.campo input {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    padding: 0 50px;
-    border: 0;
-    outline: 0;
-    background: transparent;
-    font: inherit;
-    font-size: 1rem;
-    color: var(--texto);
+/* ---------- Redes ---------- */
+.social {
+  display: flex;
+  justify-content: center;
+  gap: 34px;
+  margin-top: 16px;
 }
 
-.campo:focus-within {
-    box-shadow: 0 0 0 3px rgba(212, 175, 55, .25);
-}
-
-/* ---------- Botón principal ---------- */
-.boton {
-    margin-top: 30px;
-}
-
-.boton button {
-    width: 100%;
-    height: 42px;
-    border: 0;
-    border-radius: 10px;
-    background: var(--oro);
-    color: var(--texto);
-    font-family: inherit;
-    font-size: 1rem;
-    letter-spacing: .5px;
-    cursor: pointer;
-    transition: background .2s;
-}
-
-.boton button:hover {
-    background: var(--oro-oscuro);
-}
-
-/* ---------- Separador "Sign Up with" ---------- */
-.separador {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin: 28px 4px 18px;
-    color: var(--oro);
-    font-size: 1.05rem;
-}
-
-.separador::before,
-.separador::after {
-    content: "";
-    flex: 1;
-    height: 3px;
-    border-top: 1px solid var(--oro);
-    border-bottom: 1px solid var(--oro);
-}
-
-/* ---------- Íconos sociales ---------- */
-.redes {
-    display: flex;
-    justify-content: center;
-    gap: 34px;
-    margin-bottom: 34px;
-}
-
-.redes a {
-    display: block;
-    width: 32px;
-    height: 32px;
-    transition: transform .15s;
-}
-
-.redes a:hover {
-    transform: scale(1.12);
-}
-
-.redes svg {
-    width: 100%;
-    height: 100%;
+.social-btn {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
 }
 
 /* ---------- Pie ---------- */
-.pie {
-    font-size: .9rem;
+.footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 18px;
+  margin: 0;
+  text-align: center;
+  font-size: 0.95rem;
 }
+.footer a { color: var(--gold); text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
 
-.pie a {
-    color: var(--oro);
-    text-decoration: none;
-}
-
-.pie a:hover {
-    text-decoration: underline;
-}
-
-/* ---------- Celulares ---------- */
-@media (max-width: 480px) {
-    .login  { padding: 50px 18px 28px; }
-    .titulo { font-size: 1.5rem; }
-    .marca  { font-size: 1.6rem; }
+/* ---------- Móvil ---------- */
+@media (max-width: 420px) {
+  .title { font-size: 1.5rem; }
+  .brand { font-size: 1.75rem; }
+  .title img { height: 40px; }
 }
