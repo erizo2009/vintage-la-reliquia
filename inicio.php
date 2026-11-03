@@ -3,12 +3,12 @@ session_start();
 
 // Categorías: nombre que se ve, archivo de imagen (carpeta img/) y filtro para productos.php
 $categorias = [
-  ['comedor.png',     'comedor'],
-  ['dormitorio.png',  'dormitorio'],
-  ['living.png',      'living'],
-  ['vitrinas.png',    'vitrinas'],
-  ['escritorios.png', 'escritorios'],
-  ['iluminacion.png', 'iluminacion'],
+  ['Comedor',               'comedor.png',     'comedor'],
+  ['Dormitorio',            'dormitorio.png',  'dormitorio'],
+  ['Living',                'living.png',      'living'],
+  ['Vitrinas y guardado',   'vitrinas.png',    'vitrinas'],
+  ['Escritorios y ficheros','escritorios.png', 'escritorios'],
+  ['Iluminación',           'iluminacion.png', 'iluminacion'],
 ];
 
 // Cambiá 'usuario' por la variable de sesión que uses al iniciar sesión
