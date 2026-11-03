@@ -1,228 +1,228 @@
-
 :root {
-    --dorado: #d4af37;
-    --dorado-borde: #c4954a;
-    --rojo: #8b0000;
-    --negro: #111111;
+    --oro: #d4af37;
+    --oro-oscuro: #bf9b27;
+    --rojo: #9b0d14;
+    --texto: #1a1a1a;
 }
+
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 body {
-    font-family: "Playfair Display", serif;
-    background: white;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
+    background: #fff;
+    color: var(--texto);
+    font-family: 'Playfair Display', Georgia, serif;
 }
 
 
-.tarjeta {
-    position: relative;
+.login {
     width: 100%;
-    max-width: 390px;
-    min-height: 560px;
-    background: white;
-    border: 3px solid var(--dorado-borde);
-    box-shadow: -5px 5px 14px rgba(240, 220, 140, 0.55);
-    padding: 72px 17px 20px;
+    max-width: 425px;
+    padding: 70px 28px 34px;
     text-align: center;
-}
-
-
-.tarjeta::before {
-    content: "";
-    position: absolute;
-    inset: 4px;
-    border: 1px solid #e3cc8a;
-    pointer-events: none;
-}
-
-.tarjeta::after {
-    content: "";
-    position: absolute;
-    inset: 8px;
-    border: 1px solid #f0e2b0;
-    pointer-events: none;
+    background: #fff;
+    border: 3px solid transparent;
+    border-image: linear-gradient(135deg, #b8772f, #ecd47e 50%, #b8772f) 1;
+    box-shadow: inset 0 0 0 6px #fff, inset 0 0 0 7px #e0c25a;
 }
 
 
 .titulo {
-    font-size: 30px;
+    font-size: 2rem;
     font-weight: 400;
-    color: var(--negro);
-    line-height: 1.2;
-    margin-bottom: 52px;
+    white-space: nowrap;
+    margin-bottom: 44px;
 }
 
-.titulo .marca {
-    font-family: "Pathway Gothic One", sans-serif;
-    font-size: 42px;
+.marca {
     color: var(--rojo);
+    font-size: 2.1rem;
+    letter-spacing: -1.5px;
+    margin-left: 2px;
 }
 
-.titulo .sub {
-    font-family: "Pathway Gothic One", sans-serif;
-    font-size: 15px;
-    color: var(--negro);
-    vertical-align: -8px;
+.marca small {
+    color: var(--texto);
+    font-size: .55rem;
+    letter-spacing: -.3px;
+    margin-left: 2px;
+    vertical-align: -0.5em;
+}
+
+
+.mensaje {
+    font-size: .9rem;
+    color: #a40000;
+    margin: -24px 0 28px;
+}
+
+.mensaje.ok {
+    color: #2e7d32;
 }
 
 
 .campo {
     position: relative;
-    height: 36px;
-    margin-bottom: 40px;
+    height: 42px;
+    margin-bottom: 38px;
+    border: 1.5px solid var(--oro);
+    border-radius: 10px;
+
+    
+    background-image:
+        linear-gradient(var(--oro), var(--oro)),
+        linear-gradient(var(--oro), var(--oro)),
+        linear-gradient(var(--oro), var(--oro)),
+        linear-gradient(var(--oro), var(--oro));
+    background-size: 1px 100%;
+    background-repeat: no-repeat;
+    background-origin: border-box;
+    background-position:
+        18px 0,
+        24px 0,
+        calc(100% - 19px) 0,
+        calc(100% - 25px) 0;
 }
 
-.campo input {
-    width: 100%;
-    height: 100%;
-    border: 1.5px solid var(--dorado-borde);
-    border-radius: 8px;
-    padding: 0 50px;
-    font-family: inherit;
-    font-size: 16px;
-    color: var(--negro);
-    background: white;
-    outline: none;
+
+.campo::before,
+.campo::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 18px;
+    height: 18px;
+    transform: translateY(-50%);
+    border: 1.5px solid var(--oro);
+    border-radius: 4px;
+    background: radial-gradient(circle, var(--oro) 0 3px, #fff 3.5px);
+    pointer-events: none;
 }
 
-.campo input:focus {
-    box-shadow: 0 0 6px var(--dorado);
-}
+.campo::before { left: 11px; }
+.campo::after  { right: 11px; }
 
 
 .campo label {
     position: absolute;
-    top: -13px;
-    left: 48px;
+    top: -.75em;
+    left: 50px;
+    padding: 0 12px;
+    background: #fff;
+    font-size: 1.05rem;
+    line-height: 1.2;
+    letter-spacing: -.4px;
     z-index: 2;
-    background: white;
-    padding: 0 9px;
-    font-family: "Pathway Gothic One", sans-serif;
-    font-size: 20px;
-    line-height: 1;
-    color: var(--negro);
 }
 
-.campo.clave label {
-    left: 34px;
-}
-
-
-.adorno {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    width: 40px;
+.campo input {
+    position: relative;
     z-index: 1;
-    pointer-events: none;
+    width: 100%;
+    height: 100%;
+    padding: 0 50px;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    font: inherit;
+    font-size: 1rem;
+    color: var(--texto);
 }
 
-.adorno.izq { left: 0; }
-.adorno.der { right: 0; }
-
-
-.adorno::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 18px;
-    height: 18px;
-    border: 1.5px solid var(--dorado-borde);
-    border-radius: 4px;
-    background: radial-gradient(circle, var(--dorado) 3px, white 4px);
+.campo:focus-within {
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, .25);
 }
-
-.adorno.izq::before { left: 12px; }
-.adorno.der::before { right: 12px; }
-
-
-.adorno::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 5px;
-    border-left: 1px solid var(--dorado-borde);
-    border-right: 1px solid var(--dorado-borde);
-}
-
-.adorno.izq::after { left: 31px; }
-.adorno.der::after { right: 31px; }
 
 
 .boton {
-    display: block;
-    width: calc(100% + 6px);
-    margin: 25px 0 0 -3px;
-    height: 37px;
-    background: var(--dorado);
-    border: none;
-    border-radius: 12px;
-    font-family: inherit;
-    font-size: 16px;
-    color: var(--negro);
-    cursor: pointer;
+    margin-top: 30px;
 }
 
-.boton:hover {
-    background: #e0bb48;
+.boton button {
+    width: 100%;
+    height: 42px;
+    border: 0;
+    border-radius: 10px;
+    background: var(--oro);
+    color: var(--texto);
+    font-family: inherit;
+    font-size: 1rem;
+    letter-spacing: .5px;
+    cursor: pointer;
+    transition: background .2s;
+}
+
+.boton button:hover {
+    background: var(--oro-oscuro);
 }
 
 
 .separador {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin: 24px 0 14px;
-    color: var(--dorado);
-    font-size: 15px;
+    gap: 8px;
+    margin: 28px 4px 18px;
+    color: var(--oro);
+    font-size: 1.05rem;
 }
 
 .separador::before,
 .separador::after {
     content: "";
     flex: 1;
-    height: 5px;
-    border-top: 1px solid var(--dorado);
-    border-bottom: 1px solid var(--dorado);
+    height: 3px;
+    border-top: 1px solid var(--oro);
+    border-bottom: 1px solid var(--oro);
 }
 
 
 .redes {
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 42px;
+    gap: 34px;
+    margin-bottom: 34px;
 }
 
 .redes a {
-    display: flex;
-    color: var(--negro);
-    font-size: 27px;
+    display: block;
+    width: 32px;
+    height: 32px;
+    transition: transform .15s;
+}
+
+.redes a:hover {
+    transform: scale(1.12);
+}
+
+.redes svg {
+    width: 100%;
+    height: 100%;
 }
 
 
 .pie {
-    margin-top: 45px;
-    font-size: 13px;
-    color: var(--negro);
+    font-size: .9rem;
 }
 
 .pie a {
-    color: var(--dorado);
-    font-weight: 600;
+    color: var(--oro);
     text-decoration: none;
 }
 
 .pie a:hover {
     text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .login  { padding: 50px 18px 28px; }
+    .titulo { font-size: 1.5rem; }
+    .marca  { font-size: 1.6rem; }
 }
