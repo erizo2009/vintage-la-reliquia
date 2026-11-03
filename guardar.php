@@ -1,18 +1,15 @@
 <?php
-
 include("conexion.php");
 
-$id = $_POST["id"];
 $usuario = $_POST["usuario"];
-$contraseña = $_POST["contraseña"];
+$password = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
-$sql = "INSERT INTO usuarios (id, usuario, contraseña)
-VALUES('$id','$usuario','$contraseña')";
+$stmt = $conexion->prepare("INSERT INTO usuarios (usuario, password) VALUES (?, ?)");
+$stmt->bind_param("ss", $usuario, $password);
 
-if($conexion->query($sql)){
+if ($stmt->execute()) {
     echo "Datos guardados correctamente";
-}else{
+} else {
     echo "Error al guardar";
 }
-
 ?>

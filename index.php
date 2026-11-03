@@ -45,7 +45,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="boton">
                 <button type="submit">Iniciar sesión</button>
             </div>
-          <include "inicio.php">
         </form>
 
         <p>o</p>
