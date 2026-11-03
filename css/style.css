@@ -1,27 +1,12 @@
-.login {
-            width: 380px;
-            background: rgb(243, 232, 232);
-            padding: 40px;
-            border-radius: 25px;
-            box-shadow: 0 15px 40px rgba(199, 6, 6, 0.555);
-        }
 
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            
-
-        }
 :root {
     --dorado: #d4af37;
-    --dorado-oscuro: #c9a24a;
+    --dorado-borde: #c4954a;
     --rojo: #8b0000;
     --negro: #111111;
 }
+
+/* REGLAS GENERALES */
 * {
     margin: 0;
     padding: 0;
@@ -33,73 +18,213 @@ body {
     background: white;
     min-height: 100vh;
     display: flex;
-    justify-content: center;   
-    align-items: center;      
+    justify-content: center;
+    align-items: center;
     padding: 20px;
 }
 
+/* LA TARJETA (cuadro blanco con borde dorado) */
 .tarjeta {
+    position: relative;
     width: 100%;
     max-width: 390px;
+    min-height: 560px;
     background: white;
-    border: 4px double var(--dorado-oscuro);
-    box-shadow: 0 0 18px rgba(212, 175, 55, 0.35);
-    padding: 60px 22px 30px;
+    border: 3px solid var(--dorado-borde);
+    box-shadow: -5px 5px 14px rgba(240, 220, 140, 0.55);
+    padding: 72px 17px 20px;
     text-align: center;
 }
 
+/* Líneas finas de adentro (el borde doble) */
+.tarjeta::before {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border: 1px solid #e3cc8a;
+    pointer-events: none;
+}
 
+.tarjeta::after {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border: 1px solid #f0e2b0;
+    pointer-events: none;
+}
+
+/* TÍTULO */
 .titulo {
     font-size: 30px;
     font-weight: 400;
     color: var(--negro);
-    margin-bottom: 45px;
+    line-height: 1.2;
+    margin-bottom: 52px;
 }
 
 .titulo .marca {
     font-family: "Pathway Gothic One", sans-serif;
+    font-size: 42px;
     color: var(--rojo);
-    font-size: 38px;
 }
 
 .titulo .sub {
     font-family: "Pathway Gothic One", sans-serif;
-    color: var(--negro);
     font-size: 15px;
+    color: var(--negro);
+    vertical-align: -8px;
 }
 
+/* LOS CAMPOS (User y Password) */
 .campo {
     position: relative;
-    margin-bottom: 38px;
-}
-
-.campo label {
-    position: absolute;
-    top: -14px;
-    left: 45px;
-    background: white;
-    padding: 0 10px;
-    font-family: "Pathway Gothic One", sans-serif;
-    font-size: 21px;
-    color: var(--negro);
+    height: 36px;
+    margin-bottom: 40px;
 }
 
 .campo input {
     width: 100%;
-    height: 38px;
-    border: 1.5px solid var(--dorado-oscuro);
+    height: 100%;
+    border: 1.5px solid var(--dorado-borde);
     border-radius: 8px;
     padding: 0 50px;
     font-family: inherit;
     font-size: 16px;
     color: var(--negro);
-    outline: none;
     background: white;
+    outline: none;
 }
 
 .campo input:focus {
     box-shadow: 0 0 6px var(--dorado);
-    body {
-    background: red !important;
 }
+
+/* Etiqueta apoyada sobre la línea de arriba (corta el borde) */
+.campo label {
+    position: absolute;
+    top: -13px;
+    left: 48px;
+    z-index: 2;
+    background: white;
+    padding: 0 9px;
+    font-family: "Pathway Gothic One", sans-serif;
+    font-size: 20px;
+    line-height: 1;
+    color: var(--negro);
+}
+
+.campo.clave label {
+    left: 34px;
+}
+
+/* ADORNOS de los costados */
+.adorno {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 40px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.adorno.izq { left: 0; }
+.adorno.der { right: 0; }
+
+/* El cuadradito con el puntito dorado */
+.adorno::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--dorado-borde);
+    border-radius: 4px;
+    background: radial-gradient(circle, var(--dorado) 3px, white 4px);
+}
+
+.adorno.izq::before { left: 12px; }
+.adorno.der::before { right: 12px; }
+
+/* Las dos líneas verticales */
+.adorno::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+    border-left: 1px solid var(--dorado-borde);
+    border-right: 1px solid var(--dorado-borde);
+}
+
+.adorno.izq::after { left: 31px; }
+.adorno.der::after { right: 31px; }
+
+/* BOTÓN "Sign Up" */
+.boton {
+    display: block;
+    width: calc(100% + 6px);
+    margin: 25px 0 0 -3px;
+    height: 37px;
+    background: var(--dorado);
+    border: none;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 16px;
+    color: var(--negro);
+    cursor: pointer;
+}
+
+.boton:hover {
+    background: #e0bb48;
+}
+
+/* "Sign Up with" con líneas dobles a los costados */
+.separador {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 24px 0 14px;
+    color: var(--dorado);
+    font-size: 15px;
+}
+
+.separador::before,
+.separador::after {
+    content: "";
+    flex: 1;
+    height: 5px;
+    border-top: 1px solid var(--dorado);
+    border-bottom: 1px solid var(--dorado);
+}
+
+/* ICONOS (Gmail y Apple) */
+.redes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 42px;
+}
+
+.redes a {
+    display: flex;
+    color: var(--negro);
+    font-size: 27px;
+}
+
+/* TEXTO DE ABAJO */
+.pie {
+    margin-top: 45px;
+    font-size: 13px;
+    color: var(--negro);
+}
+
+.pie a {
+    color: var(--dorado);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.pie a:hover {
+    text-decoration: underline;
 }
