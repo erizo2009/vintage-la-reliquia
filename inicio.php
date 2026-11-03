@@ -1,18 +1,63 @@
 <?php
-require "conexion.php";
-$buscar = "";
-if (isset($_GET["q"])) {
-    $buscar = $_GET["q"];
+session_start();
+require_once __DIR__ . '/conexion.php';
+
+// ---- Retorno de Google: Google vuelve acá con ?code=... ----
+if (isset($_GET["code"])) {
+    require_once __DIR__ . '/google_config.php';
+
+    $token = $client->fetchAccessTokenWithAuthCode($_GET["code"]);
+
+    if (!isset($token["error"])) {
+        $client->setAccessToken($token);
+        $oauth = new Google\Service\Oauth2($client);
+        $info  = $oauth->userinfo->get();
+        $email = $info->email;
+
+        // Buscar o crear el usuario usando su email
+        $stmt = $conexion->prepare("SELECT id FROM usuarios WHERE usuario = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $res = $stmt->get_result();
+
+        if ($fila = $res->fetch_assoc()) {
+            $id = $fila["id"];
+        } else {
+            $hash = password_hash(bin2hex(random_bytes(16)), PASSWORD_DEFAULT);
+            $stmt = $conexion->prepare("INSERT INTO usuarios (usuario, password) VALUES (?, ?)");
+            $stmt->bind_param("ss", $email, $hash);
+            $stmt->execute();
+            $id = $conexion->insert_id;
+        }
+
+        session_regenerate_id(true);
+        $_SESSION["usuario_id"] = $id;
+        header("Location: inicio.php");
+        exit;
+    }
+
+    header("Location: index.php");
+    exit;
 }
-if ($buscar == "") {
-    
-    $sql = "SELECT * FROM productos";
+
+// ---- Proteger la página ----
+if (!isset($_SESSION["usuario_id"])) {
+    header("Location: index.php");
+    exit;
+}
+
+// ---- Búsqueda (consulta preparada) ----
+$buscar = trim($_GET["q"] ?? "");
+
+if ($buscar === "") {
+    $resultado = $conexion->query("SELECT * FROM productos");
 } else {
-   
-    $buscar_seguro = mysqli_real_escape_string($conexion, $buscar);
-    $sql = "SELECT * FROM productos WHERE nombre LIKE '%$buscar_seguro%'";
+    $like = "%" . $buscar . "%";
+    $stmt = $conexion->prepare("SELECT * FROM productos WHERE nombre LIKE ?");
+    $stmt->bind_param("s", $like);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
 }
-$resultado = mysqli_query($conexion, $sql);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -25,47 +70,40 @@ $resultado = mysqli_query($conexion, $sql);
 <body>
     <header class="header">
         <div class="container">
-            <div class="logo-area">
-            </div>
+            <div class="logo-area"></div>
             <nav class="menu">
 
-            <input type="text" name="q" placeholder="Buscar">
-            <button type="submit">🔍</button>
+                <form method="GET" action="inicio.php">
+                    <input type="text" name="q" placeholder="Buscar" value="<?php echo htmlspecialchars($buscar); ?>">
+                    <button type="submit">🔍</button>
+                </form>
 
                 <ul>
-                    <li><a href="#">INICIO</a></li>
-                    <li><a href="#">PRODUCTOS</a></li>
+                    <li><a href="inicio.php">INICIO</a></li>
+                    <li><a href="inicio.php">PRODUCTOS</a></li>
                     <li><a href="#">CONTACTOS</a></li>
-                    <li><a href="#">CREAR CUENTA</a></li>
-                    <li><a href="#">INICIAR SESION</a></li>
+                    <li><a href="logout.php">CERRAR SESION</a></li>
                 </ul>
             </nav>
         </div>
-</header>
-   
+    </header>
+
     <main class="productos">
 
-        <?php
-       
-        if (mysqli_num_rows($resultado) == 0) {
-            echo "<p class='aviso'>No se encontraron productos.</p>";
-        }
+        <?php if ($resultado->num_rows === 0) { ?>
+            <p class="aviso">No se encontraron productos.</p>
+        <?php } ?>
 
-        while ($producto = mysqli_fetch_assoc($resultado)) {
+        <?php while ($producto = $resultado->fetch_assoc()) {
+            $imagen = !empty($producto["imagen"]) ? $producto["imagen"] : "img/silla.jpg";
         ?>
-
             <div class="producto">
-                
-               <img src="img/silla.jpg" alt="<?php echo $producto['nombre']; ?>">
-                <p class="nombre"><?php echo $producto['sillas']; ?></p>
-                <p class="precio">$<?php echo number_format($producto['75.000'], 3, ',', '.'); ?> ars</p>
+                <img src="<?php echo htmlspecialchars($imagen); ?>" alt="<?php echo htmlspecialchars($producto["nombre"]); ?>">
+                <p class="nombre"><?php echo htmlspecialchars($producto["nombre"]); ?></p>
+                <p class="precio">$<?php echo number_format($producto["precio"], 0, ",", "."); ?> ars</p>
             </div>
-
-        <?php
-        }
-        ?>
+        <?php } ?>
 
     </main>
-
 </body>
 </html>
