@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// Categorías: nombre que se ve, archivo de imagen (carpeta img/) y filtro para productos.php
+// Categorías: nombre que se ve, foto (carpeta img/) y valor del filtro en la base de datos
 $categorias = [
   ['Comedor',               'comedor.png',     'comedor'],
   ['Dormitorio',            'dormitorio.png',  'dormitorio'],
@@ -13,6 +13,101 @@ $categorias = [
 
 // Cambiá 'usuario' por la variable de sesión que uses al iniciar sesión
 $logueado = isset($_SESSION['usuario']);
+
+function h($t) { return htmlspecialchars((string)$t, ENT_QUOTES, 'UTF-8'); }
+
+function etiqueta_categoria($cat) {
+  global $categorias;
+  foreach ($categorias as [$nombre, $img, $filtro]) {
+    if ($filtro === $cat) return $nombre;
+  }
+  return ucfirst($cat);
+}
+
+/* ---------- Las 6 tarjetas-botón ---------- */
+function grilla_html() {
+  global $categorias;
+  ob_start(); ?>
+  <form class="categorias" action="inicio.php" method="get">
+    <?php foreach ($categorias as [$nombre, $imagen, $filtro]):
+      $hayFoto = file_exists(__DIR__ . '/img/' . $imagen); ?>
+      <button class="tarjeta<?= $hayFoto ? ' tiene-foto' : '' ?>" type="submit" name="categoria" value="<?= h($filtro) ?>"
+        <?php if ($hayFoto): ?>style="background-image:url('img/<?= h($imagen) ?>')"<?php endif; ?>>
+        <span><?= h($nombre) ?></span>
+      </button>
+    <?php endforeach; ?>
+  </form>
+  <?php
+  return ob_get_clean();
+}
+
+/* ---------- Productos de una categoría o de una búsqueda ---------- */
+function seccion_productos($categoria, $buscar) {
+  try {
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+    $db = new mysqli('localhost', 'root', '', 'vintage');   // usuario, contraseña y base de XAMPP
+    $db->set_charset('utf8mb4');
+
+    $sql    = 'SELECT id, nombre, descripcion, precio, imagen FROM productos WHERE 1=1';
+    $tipos  = '';
+    $params = [];
+    if ($categoria !== '' && $categoria !== 'todos') { $sql .= ' AND categoria = ?'; $tipos .= 's'; $params[] = $categoria; }
+    if ($buscar !== '') { $sql .= ' AND (nombre LIKE ? OR descripcion LIKE ?)'; $tipos .= 'ss'; $params[] = "%$buscar%"; $params[] = "%$buscar%"; }
+    $sql .= ' ORDER BY id DESC';
+
+    $stmt = $db->prepare($sql);
+    if ($params) $stmt->bind_param($tipos, ...$params);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $filas = $res->fetch_all(MYSQLI_ASSOC);
+  } catch (Throwable $e) {
+    $filas = null;
+  }
+
+  if ($buscar !== '')            $titulo = 'Resultados para “' . h($buscar) . '”';
+  elseif ($categoria === 'todos') $titulo = 'Todos los productos';
+  else                            $titulo = h(etiqueta_categoria($categoria));
+
+  ob_start(); ?>
+  <section class="lista-productos">
+    <button type="button" class="volver" data-volver>← Volver a las categorías</button>
+    <h1 class="titulo-seccion"><?= $titulo ?></h1>
+
+    <?php if ($filas === null): ?>
+      <p class="vacio">No se pudieron cargar los productos. Revisá que MySQL esté iniciado y que exista la tabla <b>productos</b>.</p>
+    <?php elseif (!$filas): ?>
+      <p class="vacio">No se encontraron productos.</p>
+    <?php else: ?>
+      <div class="grilla-productos">
+        <?php foreach ($filas as $p): ?>
+          <article class="producto">
+            <div class="foto">
+              <?php if ($p['imagen'] && file_exists(__DIR__ . '/img/productos/' . $p['imagen'])): ?>
+                <img src="img/productos/<?= h($p['imagen']) ?>" alt="<?= h($p['nombre']) ?>">
+              <?php endif; ?>
+            </div>
+            <h2><?= h($p['nombre']) ?></h2>
+            <p class="desc"><?= h($p['descripcion']) ?></p>
+            <p class="precio">$ <?= number_format((float)$p['precio'], 2, ',', '.') ?></p>
+          </article>
+        <?php endforeach; ?>
+      </div>
+    <?php endif; ?>
+  </section>
+  <?php
+  return ob_get_clean();
+}
+
+/* ---------- Qué mostrar ---------- */
+$categoria = trim($_GET['categoria'] ?? '');
+$buscar    = trim($_GET['q'] ?? '');
+$hayFiltro = ($categoria !== '' || $buscar !== '');
+
+// Pedido desde JavaScript: devolvemos solo el pedazo que cambia
+if (isset($_GET['ajax'])) {
+  echo $hayFiltro ? seccion_productos($categoria, $buscar) : grilla_html();
+  exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -20,13 +115,12 @@ $logueado = isset($_SESSION['usuario']);
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>La Reliquia - Antigüedades</title>
-  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Almendra:wght@400;700&family=Montserrat:wght@800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Almendra:wght@400;700&family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
   <style>
 :root {
-  --bordo: #4d2320;
+  --bordo: #4f2622;
   --dorado: #deb94f;
   --rojo-logo: #8f0b0b;
   --gris: #b1b1b1;
@@ -85,7 +179,7 @@ a { color: inherit; text-decoration: none; }
 
 /* logo */
 .logo { display: block; justify-self: center; }
-.logo img { display: block; height: 110px; width: auto; }
+.logo img { display: block; height: 118px; width: auto; }
 
 /* crear cuenta | iniciar sesión + carrito */
 .acciones {
@@ -159,7 +253,7 @@ a { color: inherit; text-decoration: none; }
   padding: 12px;
   transition: transform .3s;
 }
-/* velo gris suave sobre la foto, como en el diseño */
+
 .tarjeta::after {
   content: "";
   position: absolute;
@@ -185,7 +279,27 @@ a { color: inherit; text-decoration: none; }
 .tarjeta:active { transform: translateY(1px); }
 .tarjeta:focus-visible { outline: 3px solid var(--dorado); outline-offset: 3px; }
 
-/* ---------- Pantallas chicas ---------- */
+
+.tarjeta.tiene-foto {
+  background-color: var(--gris);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  transition: filter .2s, transform .1s;
+}
+.tarjeta.tiene-foto::after { display: none; }
+
+.tarjeta.tiene-foto span {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.tarjeta.tiene-foto:hover { filter: brightness(1.08); }
+.tarjeta:nth-child(n+4) { aspect-ratio: 295 / 294; }
+
+
 @media (max-width: 900px) {
   .topbar { grid-template-columns: 1fr; height: auto; gap: 12px; padding: 14px 16px; justify-items: center; }
   .buscador { max-width: 320px; }
@@ -196,12 +310,51 @@ a { color: inherit; text-decoration: none; }
   .tarjeta span { font-size: 1.2rem; }
 }
 
-</style>
+
+.lista-productos { max-width: 1100px; margin: 0 auto; padding: 0 20px 48px; }
+.titulo-seccion { margin: 8px 0 28px; text-align: center; font-weight: 400; font-size: 2.6rem; color: var(--dorado); }
+.vacio { text-align: center; color: #333; font-family: var(--titulo); font-weight: 600; }
+
+.grilla-productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 28px 24px;
+}
+.producto { color: #222; font-family: var(--titulo); font-weight: 600; }
+.producto .foto {
+  aspect-ratio: 4 / 3;
+  background: var(--gris);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .25);
+  overflow: hidden;
+}
+.producto .foto img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.producto h2 { margin: 12px 0 4px; font-size: 1.05rem; font-weight: 800; }
+.producto .desc { margin: 0 0 6px; font-size: .85rem; font-weight: 600; color: #555; }
+.producto .precio { margin: 0; font-size: 1.15rem; font-weight: 800; color: #8a6d1a; }
+
+
+.volver {
+  display: inline-block;
+  margin: 4px 0 8px;
+  padding: 8px 16px;
+  border: 1.5px solid var(--dorado);
+  border-radius: 8px;
+  background: transparent;
+  font-family: var(--deco);
+  font-size: 1.15rem;
+  color: #8a6d1a;
+  cursor: pointer;
+}
+.volver:hover { background: var(--dorado); color: #fff; }
+#contenido { transition: opacity .15s; }
+#contenido.cargando { opacity: .45; pointer-events: none; }
+
+  </style>
 </head>
 <body>
 
 <header class="topbar">
-  <form class="buscador" action="productos.php" method="get" role="search">
+  <form class="buscador" action="inicio.php" method="get" role="search">
     <input type="search" name="q" placeholder="Buscar" aria-label="Buscar">
     <button type="submit" aria-label="Buscar">
       <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
@@ -236,23 +389,71 @@ a { color: inherit; text-decoration: none; }
 </header>
 
 <nav class="menu" aria-label="Principal">
-  <a href="inicio.php">Inicio</a>
-  <a href="productos.php">Productos</a>
+  <a href="inicio.php" data-cargar>Inicio</a>
+  <a href="inicio.php?categoria=todos" data-cargar>Productos</a>
   <a href="contacto.php">Contacto</a>
 </nav>
 
-<main>
-  <form class="categorias" action="productos.php" method="get">
-    <?php foreach ($categorias as [$nombre, $imagen, $filtro]): ?>
-      <button class="tarjeta" type="submit" name="categoria" value="<?= htmlspecialchars($filtro) ?>">
-        <?php if (file_exists(__DIR__ . '/img/' . $imagen)): ?>
-          <img src="img/<?= htmlspecialchars($imagen) ?>" alt="">
-        <?php endif; ?>
-        <span><?= htmlspecialchars($nombre) ?></span>
-      </button>
-    <?php endforeach; ?>
-  </form>
+<main id="contenido">
+  <?= $hayFiltro ? seccion_productos($categoria, $buscar) : grilla_html() ?>
 </main>
+
+<script>
+const contenido = document.getElementById('contenido');
+
+
+async function cargar(params, guardarHistorial = true) {
+  const url   = params ? 'inicio.php?' + params : 'inicio.php';
+  const pedido = url + (params ? '&' : '?') + 'ajax=1';
+  contenido.classList.add('cargando');
+  try {
+    const r = await fetch(pedido);
+    if (!r.ok) throw new Error(r.status);
+    contenido.innerHTML = await r.text();
+    if (guardarHistorial) history.pushState(null, '', url);
+    contenido.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } catch (e) {
+    window.location.href = url;   
+  }
+  contenido.classList.remove('cargando');
+}
+
+
+document.addEventListener('submit', (e) => {
+  const f = e.target;
+  if (!f.matches('.categorias, .buscador')) return;
+  e.preventDefault();
+  const datos = new URLSearchParams();
+  if (f.matches('.categorias')) {
+    if (!e.submitter) return;
+    datos.set('categoria', e.submitter.value);
+  } else {
+    const q = f.q.value.trim();
+    if (!q) return;
+    datos.set('q', q);
+  }
+  cargar(datos.toString());
+});
+
+
+document.addEventListener('click', (e) => {
+  if (e.target.closest('[data-volver]')) { e.preventDefault(); cargar(''); return; }
+  const a = e.target.closest('a[data-cargar]');
+  if (a) {
+    e.preventDefault();
+    cargar(new URL(a.href).search.replace(/^\?/, ''));
+  }
+});
+
+
+window.addEventListener('popstate', () => {
+  const p = new URLSearchParams(location.search);
+  const datos = new URLSearchParams();
+  if (p.get('categoria')) datos.set('categoria', p.get('categoria'));
+  if (p.get('q')) datos.set('q', p.get('q'));
+  cargar(datos.toString(), false);
+});
+</script>
 
 </body>
 </html>
