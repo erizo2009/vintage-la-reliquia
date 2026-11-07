@@ -1,3 +1,4 @@
+
 <?php
 // Muestra los errores en pantalla (borrá estas 2 líneas cuando todo ande)
 ini_set('display_errors', 1);
@@ -47,6 +48,7 @@ function grilla_html() {
 
 /* ---------- Productos de una categoría o de una búsqueda ---------- */
 function seccion_productos($categoria, $buscar) {
+  $errorDb = '';
   try {
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
     $db = new mysqli('localhost', 'root', '', 'vintage');   // usuario, contraseña y base de XAMPP
@@ -66,6 +68,7 @@ function seccion_productos($categoria, $buscar) {
     $filas = $res->fetch_all(MYSQLI_ASSOC);
   } catch (Throwable $e) {
     $filas = null;
+    $errorDb = $e->getMessage();
   }
 
   if ($buscar !== '')            $titulo = 'Resultados para “' . h($buscar) . '”';
@@ -81,6 +84,7 @@ function seccion_productos($categoria, $buscar) {
 
     <?php if ($filas === null): ?>
       <p class="vacio">No se pudieron cargar los productos. Revisá que MySQL esté iniciado y que exista la tabla <b>productos</b>.</p>
+      <p class="vacio"><small>Error de MySQL: <?= h($errorDb) ?></small></p>
     <?php elseif (!$filas): ?>
       <p class="vacio">No se encontraron productos.</p>
     <?php else: ?>
@@ -369,6 +373,68 @@ a { color: inherit; text-decoration: none; }
 #contenido { transition: opacity .15s; }
 #contenido.cargando { opacity: .45; pointer-events: none; }
 
+
+/* ---------- Pie de página: beneficios + contacto ---------- */
+html { scroll-behavior: smooth; }
+body { min-height: 100vh; display: flex; flex-direction: column; }
+#contenido { flex: 1; }
+
+.beneficios {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 1300px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 56px 24px;
+}
+.beneficio {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 0 16px;
+  color: #111;
+}
+.beneficio + .beneficio::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 6px;
+  height: 104px;
+  transform: translateY(-50%);
+  background:
+    radial-gradient(circle, #111 2.5px, transparent 3px) top / 6px 6px no-repeat,
+    radial-gradient(circle, #111 2.5px, transparent 3px) bottom / 6px 6px no-repeat,
+    linear-gradient(#111, #111) center / 2px 100% no-repeat;
+}
+.beneficio svg { flex: none; width: 56px; height: 56px; }
+.beneficio .titulo { margin: 0; font-family: var(--deco); font-size: 2rem; line-height: 1.1; }
+.beneficio .sub    { margin: 2px 0 0; font-family: var(--deco); font-size: 1.55rem; line-height: 1.1; color: #c4a93c; }
+
+.pie { background: #804d49; color: #111; font-family: var(--deco); scroll-margin-top: 8px; }
+.pie-interior {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 18px 24px 26px;
+}
+.pie h2 { margin: 0 0 8px; font-size: 2.4rem; font-weight: 400; line-height: 1.1; }
+.pie ul { list-style: none; margin: 0; padding: 0; }
+.pie li { display: flex; align-items: center; gap: 10px; margin: 10px 0; font-size: 1.3rem; }
+.pie li svg { flex: none; width: 24px; height: 24px; }
+.pie a:hover { text-decoration: underline; }
+.pie .red-icono { width: 32px; height: 32px; }
+
+@media (max-width: 900px) {
+  .beneficios { grid-template-columns: 1fr; gap: 28px; padding: 36px 16px; }
+  .beneficio + .beneficio::before { display: none; }
+  .pie-interior { grid-template-columns: 1fr; }
+}
+
 </style>
 </head>
 <body>
@@ -411,12 +477,72 @@ a { color: inherit; text-decoration: none; }
 <nav class="menu" aria-label="Principal">
   <a href="inicio.php" data-cargar>Inicio</a>
   <a href="inicio.php?categoria=todos" data-cargar>Productos</a>
-  <a href="contacto.php">Contacto</a>
+  <a href="#contacto">Contacto</a>
 </nav>
 
 <main id="contenido">
   <?= $hayFiltro ? seccion_productos($categoria, $buscar) : grilla_html() ?>
 </main>
+
+<section class="beneficios" aria-label="Beneficios">
+  <div class="beneficio">
+    <svg viewBox="0 0 64 64" fill="#1c1040" aria-hidden="true">
+      <path d="M4 14h32v28H4z"/><path d="M38 22h12l10 10v10H38z"/>
+      <circle cx="16" cy="46" r="6" fill="#fff" stroke="#1c1040" stroke-width="3"/>
+      <circle cx="48" cy="46" r="6" fill="#fff" stroke="#1c1040" stroke-width="3"/>
+    </svg>
+    <div><p class="titulo">Enviamos tu compra</p><p class="sub">Envios a todo el país</p></div>
+  </div>
+  <div class="beneficio">
+    <svg viewBox="0 0 64 64" fill="none" stroke="#111" stroke-width="4" stroke-linecap="round" aria-hidden="true">
+      <circle cx="32" cy="32" r="28"/>
+      <path d="M40 22c-2-3-6-4-9-4-5 0-8 3-8 7 0 10 18 4 18 15 0 4-4 7-9 7-4 0-8-1-10-5M32 11v42" stroke-width="3.5"/>
+    </svg>
+    <div><p class="titulo">Medios de pago</p><p class="sub">Efectivo Transferencia</p></div>
+  </div>
+  <div class="beneficio">
+    <svg viewBox="0 0 64 64" fill="none" stroke="#111" stroke-width="4" stroke-linejoin="round" aria-hidden="true">
+      <rect x="14" y="28" width="36" height="28" rx="4"/>
+      <path d="M22 28V20a10 10 0 0 1 20 0v8"/>
+    </svg>
+    <div><p class="titulo">Compra con seguridad</p><p class="sub">Tus datos siempre protegidos</p></div>
+  </div>
+</section>
+
+<footer class="pie" id="contacto">
+  <div class="pie-interior">
+    <div>
+      <h2>Contactanos</h2>
+      <ul>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>
+          <a href="tel:+54224894017">+54 2248 94017</a>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="m3 7 9 7 9-7"/></svg>
+          <a href="mailto:Lareliquia@gmail.com">Lareliquia@gmail.com</a>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          Santa Teresita, CABA
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h2>Redes sociales</h2>
+      <ul>
+        <li>
+          <svg class="red-icono" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#111"/><rect x="8.5" y="8.5" width="15" height="15" rx="4.5" fill="none" stroke="#fff" stroke-width="2"/><circle cx="16" cy="16" r="3.6" fill="none" stroke="#fff" stroke-width="2"/><circle cx="20.6" cy="11.4" r="1.1" fill="#fff"/></svg>
+          <a href="https://www.instagram.com/lareliquiadeargentinantiguedades" target="_blank" rel="noopener">Lareliquiadeargentinantiguedades</a>
+        </li>
+        <li>
+          <svg class="red-icono" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#111"/><path d="M17.6 25v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.6V7.6c-.3 0-1.2-.1-2.4-.1-2.4 0-4 1.4-4 4.1v2.3h-2.7V17h2.7v8z" fill="#fff"/></svg>
+          <a href="#" target="_blank" rel="noopener">Facebook</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
 
 <script>
 const contenido = document.getElementById('contenido');
