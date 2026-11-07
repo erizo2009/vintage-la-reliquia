@@ -1,4 +1,3 @@
-
 :root {
   --bordo: #4f2622;
   --dorado: #deb94f;
@@ -242,3 +241,64 @@ a { color: inherit; text-decoration: none; }
 .volver:hover { background: var(--dorado); color: #fff; }
 #contenido { transition: opacity .15s; }
 #contenido.cargando { opacity: .45; pointer-events: none; }
+
+/* ---------- Pie de página: beneficios + contacto ---------- */
+html { scroll-behavior: smooth; }
+body { min-height: 100vh; display: flex; flex-direction: column; }
+#contenido { flex: 1; }
+
+.beneficios {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 1300px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 56px 24px;
+}
+.beneficio {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 0 16px;
+  color: #111;
+}
+.beneficio + .beneficio::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 6px;
+  height: 104px;
+  transform: translateY(-50%);
+  background:
+    radial-gradient(circle, #111 2.5px, transparent 3px) top / 6px 6px no-repeat,
+    radial-gradient(circle, #111 2.5px, transparent 3px) bottom / 6px 6px no-repeat,
+    linear-gradient(#111, #111) center / 2px 100% no-repeat;
+}
+.beneficio svg { flex: none; width: 56px; height: 56px; }
+.beneficio .titulo { margin: 0; font-family: var(--deco); font-size: 2rem; line-height: 1.1; }
+.beneficio .sub    { margin: 2px 0 0; font-family: var(--deco); font-size: 1.55rem; line-height: 1.1; color: #c4a93c; }
+
+.pie { background: #804d49; color: #111; font-family: var(--deco); scroll-margin-top: 8px; }
+.pie-interior {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 18px 24px 26px;
+}
+.pie h2 { margin: 0 0 8px; font-size: 2.4rem; font-weight: 400; line-height: 1.1; }
+.pie ul { list-style: none; margin: 0; padding: 0; }
+.pie li { display: flex; align-items: center; gap: 10px; margin: 10px 0; font-size: 1.3rem; }
+.pie li svg { flex: none; width: 24px; height: 24px; }
+.pie a:hover { text-decoration: underline; }
+.pie .red-icono { width: 32px; height: 32px; }
+
+@media (max-width: 900px) {
+  .beneficios { grid-template-columns: 1fr; gap: 28px; padding: 36px 16px; }
+  .beneficio + .beneficio::before { display: none; }
+  .pie-interior { grid-template-columns: 1fr; }
+}
