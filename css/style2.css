@@ -1,5 +1,5 @@
 :root {
-  --bordo: #4f2622;
+  --bordo: #4d2320;
   --dorado: #deb94f;
   --rojo-logo: #8f0b0b;
   --gris: #b1b1b1;
@@ -58,7 +58,7 @@ a { color: inherit; text-decoration: none; }
 
 /* logo */
 .logo { display: block; justify-self: center; }
-.logo img { display: block; height: 118px; width: auto; }
+.logo img { display: block; height: 110px; width: auto; }
 
 /* crear cuenta | iniciar sesión + carrito */
 .acciones {
@@ -158,27 +158,6 @@ a { color: inherit; text-decoration: none; }
 .tarjeta:active { transform: translateY(1px); }
 .tarjeta:focus-visible { outline: 3px solid var(--dorado); outline-offset: 3px; }
 
-/* ---------- Tarjetas con foto de fondo ---------- */
-.tarjeta.tiene-foto {
-  background-color: var(--gris);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 100% 100%;
-  transition: filter .2s, transform .1s;
-}
-.tarjeta.tiene-foto::after { display: none; }
-/* el texto ya viene en la foto: queda solo para lectores de pantalla */
-.tarjeta.tiene-foto span {
-  position: absolute;
-  width: 1px; height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-.tarjeta.tiene-foto:hover { filter: brightness(1.08); }
-/* la segunda fila es más alta, como en el diseño */
-.tarjeta:nth-child(n+4) { aspect-ratio: 295 / 294; }
-
 /* ---------- Pantallas chicas ---------- */
 @media (max-width: 900px) {
   .topbar { grid-template-columns: 1fr; height: auto; gap: 12px; padding: 14px 16px; justify-items: center; }
@@ -189,55 +168,3 @@ a { color: inherit; text-decoration: none; }
   .categorias { padding: 0 12px 28px; gap: 12px; grid-template-columns: repeat(2, 1fr); }
   .tarjeta span { font-size: 1.2rem; }
 }
-
-/* ---------- Página de productos ---------- */
-.lista-productos { max-width: 1100px; margin: 0 auto; padding: 0 20px 56px; }
-.titulo-seccion { margin: 8px 0 28px; text-align: center; font-weight: 400; font-size: 2.6rem; color: var(--dorado); }
-.vacio { text-align: center; color: #333; font-family: var(--titulo); font-weight: 600; }
-
-.grilla-productos {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px 48px;
-  padding-top: 12px;
-}
-.producto { color: #2b1d1a; font-family: var(--deco); }
-.producto .foto {
-  display: flex;
-  align-items: flex-end;
-  min-height: 210px;
-}
-.producto .foto img {
-  display: block;
-  max-width: 100%;
-  max-height: 210px;
-  width: auto;
-  height: auto;
-}
-.producto h2 { margin: 10px 0 6px; font-size: 1.6rem; font-weight: 400; line-height: 1.15; }
-.producto .precio { margin: 0; font-size: 1.9rem; font-weight: 400; color: #2b1d1a; }
-.producto .desc { display: none; }
-
-@media (max-width: 900px) {
-  .grilla-productos { grid-template-columns: repeat(2, 1fr); gap: 28px 20px; }
-}
-@media (max-width: 560px) {
-  .grilla-productos { grid-template-columns: 1fr; }
-}
-
-/* ---------- Carga en la misma página ---------- */
-.volver {
-  display: inline-block;
-  margin: 4px 0 8px;
-  padding: 8px 16px;
-  border: 1.5px solid var(--dorado);
-  border-radius: 8px;
-  background: transparent;
-  font-family: var(--deco);
-  font-size: 1.15rem;
-  color: #8a6d1a;
-  cursor: pointer;
-}
-.volver:hover { background: var(--dorado); color: #fff; }
-#contenido { transition: opacity .15s; }
-#contenido.cargando { opacity: .45; pointer-events: none; }
