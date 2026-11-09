@@ -1,0 +1,286 @@
+/* ===== Colores y letras que se repiten ===== */
+:root {
+  --bordo: #4f2622;
+  --dorado: #deb94f;
+  --letra-decorada: "Almendra", Georgia, serif;
+  --letra-titulo: "Montserrat", Arial, sans-serif;
+}
+
+/* ===== General ===== */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;   /* el scroll baja suavemente */
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;     /* el pie queda siempre abajo */
+  font-family: var(--letra-decorada);
+  background: white;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Clase para esconder cosas (la usa el JavaScript) */
+.oculto {
+  display: none !important;
+}
+
+/* ===== Encabezado ===== */
+.encabezado {
+  height: 118px;
+  padding: 0 40px;
+  background: var(--bordo);
+  color: var(--dorado);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.buscador {
+  width: 262px;
+  display: flex;
+  border-bottom: 2px solid var(--dorado);
+}
+
+.buscador input {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 4px 4px 18px;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--letra-decorada);
+  font-size: 27px;
+  color: var(--dorado);
+}
+
+.buscador input::placeholder {
+  color: var(--dorado);
+}
+
+.buscador button {
+  border: none;
+  background: transparent;
+  color: var(--dorado);
+  cursor: pointer;
+}
+
+.logo {
+  height: 118px;
+}
+
+.acciones {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 27px;
+}
+
+.linea {
+  width: 2px;
+  height: 36px;
+  background: var(--dorado);
+}
+
+.carrito {
+  margin-left: 28px;
+}
+
+/* ===== Menú: Inicio / Productos / Contacto ===== */
+.menu {
+  width: 931px;
+  max-width: 100%;
+  margin: 6px auto 24px;
+  display: flex;
+  justify-content: space-around;
+  font-size: 38px;
+  color: var(--dorado);
+}
+
+.menu a:hover {
+  text-decoration: underline;
+}
+
+/* ===== Contenido principal ===== */
+.principal {
+  flex: 1;
+}
+
+/* ----- Pantalla 1: las 6 tarjetas ----- */
+.categorias {
+  width: 931px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding-bottom: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;   /* 3 columnas */
+  gap: 22px 24px;
+}
+
+.tarjeta {
+  padding: 0;
+  border: none;
+  background: #b1b1b1;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+.tarjeta img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.tarjeta:hover {
+  filter: brightness(1.08);
+}
+
+/* ----- Pantalla 2: productos ----- */
+#productos {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px 56px;
+}
+
+/* Cuando se elige una categoría: panel a la izquierda + productos */
+#productos.con-lateral {
+  max-width: 1360px;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 24px;
+}
+
+#lateral {
+  padding: 8px 0 0 24px;
+}
+
+.migas {
+  margin: 0 0 14px;
+  font-size: 32px;
+  color: var(--dorado);
+}
+
+#titulo-categoria {
+  margin: 0 0 14px;
+  font-size: 51px;
+  font-weight: normal;
+  color: var(--dorado);
+}
+
+#descripcion-categoria {
+  margin: 0;
+  font-size: 21px;
+  line-height: 1.6;
+}
+
+#vacio {
+  text-align: center;
+  font-family: var(--letra-titulo);
+}
+
+.grilla {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 40px 48px;
+  padding-top: 12px;
+}
+
+.producto img {
+  display: block;
+  width: 100%;
+  height: 210px;
+  object-fit: contain;          /* la foto entra completa */
+  object-position: left bottom;
+}
+
+.producto h2 {
+  margin: 10px 0 6px;
+  font-size: 26px;
+  font-weight: normal;
+  color: #2b1d1a;
+}
+
+.precio {
+  margin: 0;
+  font-size: 30px;
+  color: #2b1d1a;
+}
+
+/* ===== Beneficios (envíos, pagos, seguridad) ===== */
+.beneficios {
+  width: 1300px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 56px 24px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.beneficio {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.beneficio p {
+  margin: 0;
+}
+
+.beneficio .titulo {
+  font-size: 32px;
+}
+
+.beneficio .sub {
+  font-size: 25px;
+  color: #c4a93c;
+}
+
+/* ===== Contactos (pie de página) ===== */
+#contactos {
+  background: #804d49;
+}
+
+.contactos-interior {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 18px 24px 26px;
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+#contactos h2 {
+  margin: 0 0 8px;
+  font-size: 38px;
+  font-weight: normal;
+}
+
+#contactos p {
+  margin: 10px 0;
+  font-size: 21px;
+}
+
+/* ===== Celulares y pantallas chicas ===== */
+@media (max-width: 900px) {
+  .encabezado {
+    height: auto;
+    padding: 14px 16px;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .acciones { font-size: 20px; }
+  .menu { font-size: 26px; }
+  .categorias { grid-template-columns: 1fr 1fr; padding: 0 12px 28px; gap: 12px; }
+  #productos.con-lateral { grid-template-columns: 1fr; }
+  .grilla { grid-template-columns: 1fr 1fr; gap: 28px 20px; }
+  .beneficios, .contactos-interior { flex-direction: column; gap: 28px; }
+}
