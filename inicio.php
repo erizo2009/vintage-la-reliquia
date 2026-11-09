@@ -60,8 +60,8 @@ $categorias = [
   <title>La Reliquia - Antigüedades</title>
   <!-- Tipografías de Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Almendra&family=Montserrat:wght@800&display=swap" rel="stylesheet">
-  <!-- Archivo de estilos (está en la carpeta css, un nivel arriba de php) -->
-  <link rel="stylesheet" href="../css/estilos.css">
+  <!-- Archivo de estilos (está en la carpeta css, al lado de este archivo) -->
+  <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
 
@@ -77,7 +77,7 @@ $categorias = [
       </button>
     </form>
 
-    <img class="logo" src="../img/logo.png" alt="La Reliquia antigüedades">
+    <img class="logo" src="img/logo.png" alt="La Reliquia antigüedades">
 
     <div class="acciones">
       <?php if ($logueado) { ?>
@@ -111,7 +111,7 @@ $categorias = [
     <section id="inicio" class="categorias">
       <?php foreach ($categorias as $c) { ?>
         <button class="tarjeta" onclick="mostrarProductos('<?= $c['clave'] ?>', '<?= $c['nombre'] ?>', '<?= $c['descripcion'] ?>')">
-          <img src="../img/<?= $c['clave'] ?>.png" alt="<?= $c['nombre'] ?>">
+          <img src="img/<?= $c['clave'] ?>.png" alt="<?= $c['nombre'] ?>">
         </button>
       <?php } ?>
     </section>
@@ -134,7 +134,7 @@ $categorias = [
 
           <?php foreach ($lista as $p) { ?>
             <article class="producto <?= $p['categoria'] ?>">
-              <img src="../img/productos/<?= $p['imagen'] ?>" alt="<?= $p['nombre'] ?>">
+              <img src="img/productos/<?= $p['imagen'] ?>" alt="<?= $p['nombre'] ?>">
               <h2><?= $p['nombre'] ?></h2>
               <p class="precio">$<?= number_format($p['precio'], 0, ',', '.') ?> ars</p>
             </article>
