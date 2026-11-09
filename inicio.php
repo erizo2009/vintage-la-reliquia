@@ -538,7 +538,7 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
 <nav class="menu" aria-label="Principal">
   <a href="inicio.php" data-cargar>Inicio</a>
   <a href="inicio.php?categoria=todos" data-cargar>Productos</a>
-  <a href="#contacto">Contacto</a>
+  <a href="#pie">Contacto</a>
 </nav>
 
 <main id="contenido">
