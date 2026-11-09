@@ -1,55 +1,36 @@
 <?php
+// Guarda si el usuario inició sesión (cambiá 'usuario' por tu variable de sesión)
 session_start();
-$logueado = isset($_SESSION['usuario']);   // cambiá 'usuario' por tu variable de sesión
+$logueado = isset($_SESSION['usuario']);
 
-// ---------- Conexión a MySQL (XAMPP: usuario root, sin contraseña) ----------
-$conexion = mysqli_connect("localhost", "root", "", "vintage");
-if (!$conexion) {
-  die("No se pudo conectar con MySQL. ¿Está iniciado en XAMPP?");
-}
-
-// ---------- Traemos los productos de la tabla de MySQL ----------
-$productos = mysqli_query($conexion, "SELECT * FROM productos ORDER BY id");
-if (!$productos) {
-  die("Falta la tabla productos. Ejecutá productos.sql en phpMyAdmin.");
-}
-
-// ---------- Pasamos los productos de MySQL a una lista ----------
-$lista = [];
-while ($fila = mysqli_fetch_assoc($productos)) {
-  $lista[] = $fila;
-}
-
-// ---------- Productos de VITRINAS cargados acá, en el PHP ----------
-// (para agregar uno más, copiá una línea y cambiala)
-$vitrinas = [
-  ['nombre' => 'Importante vitrina roble Chippendale tallada', 'precio' => 2400000, 'categoria' => 'vitrinas', 'imagen' => 'vitrina-roble.jpg'],
-  ['nombre' => 'Antiguo aparador ingles tallado cedro',        'precio' => 1200000, 'categoria' => 'vitrinas', 'imagen' => 'aparador-ingles.jpg'],
-  ['nombre' => 'Antiguo aparador Chippendale tallado',         'precio' => 980000,  'categoria' => 'vitrinas', 'imagen' => 'aparador-chippendale.jpg'],
-  ['nombre' => 'Antiguo petit chifonier frances',              'precio' => 1800000, 'categoria' => 'vitrinas', 'imagen' => 'petit-chifonier.jpg'],
+// ---------- Las 6 categorías: clave (nombre de la imagen) y nombre ----------
+$categorias = [
+  ['clave' => 'comedor',     'nombre' => 'Comedor'],
+  ['clave' => 'dormitorio',  'nombre' => 'Dormitorio'],
+  ['clave' => 'living',      'nombre' => 'Living'],
+  ['clave' => 'vitrinas',    'nombre' => 'Vitrinas y guardado'],
+  ['clave' => 'escritorios', 'nombre' => 'Escritorios y ficheros'],
+  ['clave' => 'iluminacion', 'nombre' => 'Iluminación'],
 ];
 
-// Los sumamos a la lista (si ya estaban en MySQL, no los repetimos)
-foreach ($vitrinas as $v) {
-  $yaEsta = false;
-  foreach ($lista as $fila) {
-    if ($fila['imagen'] == $v['imagen']) {
-      $yaEsta = true;
-    }
-  }
-  if (!$yaEsta) {
-    $lista[] = $v;
-  }
-}
-
-// ---------- Las 6 categorías ----------
-$categorias = [
-  ['clave' => 'comedor',     'nombre' => 'Comedor',                'descripcion' => 'Sillas mesas y juegos de comedor'],
-  ['clave' => 'dormitorio',  'nombre' => 'Dormitorio',             'descripcion' => 'Camas, cómodas y mesas de luz'],
-  ['clave' => 'living',      'nombre' => 'Living',                 'descripcion' => 'Sillones, mesas ratonas y más'],
-  ['clave' => 'vitrinas',    'nombre' => 'Vitrinas y guardado',    'descripcion' => 'Vitrinas, bibliotecas y muebles de guardado'],
-  ['clave' => 'escritorios', 'nombre' => 'Escritorios y ficheros', 'descripcion' => 'Escritorios y ficheros'],
-  ['clave' => 'iluminacion', 'nombre' => 'Iluminación',            'descripcion' => 'Arañas, lámparas y apliques'],
+// ---------- Los productos (para agregar uno, copiá una línea y cambiala) ----------
+$productos = [
+  ['nombre' => 'Sillones de salon estilo Luis xv',      'precio' => 2200000, 'categoria' => 'living',     'foto' => 'sillones.jpg'],
+  ['nombre' => 'Mesa antigua de caoba',                 'precio' => 980000,  'categoria' => 'living',     'foto' => 'mesa-caoba.jpg'],
+  ['nombre' => 'Mesa marmol-oro siglo xii',             'precio' => 920000,  'categoria' => 'living',     'foto' => 'mesa-marmol-oro.jpg'],
+  ['nombre' => 'Mesa en Nodal y Marmol',                'precio' => 1500000, 'categoria' => 'living',     'foto' => 'mesa-nodal-marmol.jpg'],
+  ['nombre' => 'Mesa oriental siglo xv en nodal y oro', 'precio' => 1700000, 'categoria' => 'living',     'foto' => 'mesa-oriental.jpg'],
+  ['nombre' => 'Mesas de luz siglo xvi',                'precio' => 1800000, 'categoria' => 'dormitorio', 'foto' => 'mesas-de-luz.jpg'],
+  ['nombre' => 'Juego de 6 sillas francesas Luis xv',   'precio' => 1500000, 'categoria' => 'comedor',    'foto' => 'sillas-francesas.jpg'],
+  ['nombre' => 'Mesa de comedor francesa tallada',      'precio' => 1400000, 'categoria' => 'comedor',    'foto' => 'mesa-francesa-tallada.jpg'],
+  ['nombre' => 'Juego de 6 sillas de roble',            'precio' => 990000,  'categoria' => 'comedor',    'foto' => 'sillas-roble.jpg'],
+  ['nombre' => 'Mesa de comedor francesa Luis xv',      'precio' => 1500000, 'categoria' => 'comedor',    'foto' => 'mesa-luis-xv.jpg'],
+  ['nombre' => 'Mesa oriental siglo xv en nodal y oro', 'precio' => 2200000, 'categoria' => 'comedor',    'foto' => 'mesa-oriental-xv.jpg'],
+  ['nombre' => 'Mesa de comedor francesa',              'precio' => 2000000, 'categoria' => 'comedor',    'foto' => 'mesa-francesa-oval.jpg'],
+  ['nombre' => 'Importante vitrina roble Chippendale tallada', 'precio' => 2400000, 'categoria' => 'vitrinas', 'foto' => 'vitrina-roble.jpg'],
+  ['nombre' => 'Antiguo aparador ingles tallado cedro', 'precio' => 1200000, 'categoria' => 'vitrinas', 'foto' => 'aparador-ingles.jpg'],
+  ['nombre' => 'Antiguo aparador Chippendale tallado', 'precio' => 980000, 'categoria' => 'vitrinas', 'foto' => 'aparador-chippendale.jpg'],
+  ['nombre' => 'Antiguo petit chifonier frances', 'precio' => 1800000, 'categoria' => 'vitrinas', 'foto' => 'petit-chifonier.jpg'],
 ];
 ?>
 <!DOCTYPE html>
@@ -60,8 +41,8 @@ $categorias = [
   <title>La Reliquia - Antigüedades</title>
   <!-- Tipografías de Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Almendra&family=Montserrat:wght@800&display=swap" rel="stylesheet">
-  <!-- Archivo de estilos (está en la carpeta css, un nivel arriba de php) -->
-  <link rel="stylesheet" href="../css/estilos.css">
+  <!-- Archivo de estilos -->
+  <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
 
@@ -77,7 +58,7 @@ $categorias = [
       </button>
     </form>
 
-    <img class="logo" src="../img/logo.png" alt="La Reliquia antigüedades">
+    <img class="logo" src="img/logo.png" alt="La Reliquia antigüedades">
 
     <div class="acciones">
       <?php if ($logueado) { ?>
@@ -109,9 +90,9 @@ $categorias = [
 
     <!-- ========== PANTALLA 1: las 6 categorías (botones) ========== -->
     <section id="inicio" class="categorias">
-      <?php foreach ($categorias as $c) { ?>
-        <button class="tarjeta" onclick="mostrarProductos('<?= $c['clave'] ?>', '<?= $c['nombre'] ?>', '<?= $c['descripcion'] ?>')">
-          <img src="../img/<?= $c['clave'] ?>.png" alt="<?= $c['nombre'] ?>">
+      <?php foreach ($categorias as $cat) { ?>
+        <button class="tarjeta" onclick="mostrarProductos('<?= $cat['clave'] ?>')">
+          <img src="img/<?= $cat['clave'] ?>.png" alt="<?= $cat['nombre'] ?>">
         </button>
       <?php } ?>
     </section>
@@ -132,9 +113,9 @@ $categorias = [
 
         <div class="grilla">
 
-          <?php foreach ($lista as $p) { ?>
+          <?php foreach ($productos as $p) { ?>
             <article class="producto <?= $p['categoria'] ?>">
-              <img src="../img/productos/<?= $p['imagen'] ?>" alt="<?= $p['nombre'] ?>">
+              <img src="img/productos/<?= $p['foto'] ?>" alt="<?= $p['nombre'] ?>">
               <h2><?= $p['nombre'] ?></h2>
               <p class="precio">$<?= number_format($p['precio'], 0, ',', '.') ?> ars</p>
             </article>
@@ -191,72 +172,7 @@ $categorias = [
     </div>
   </div>
 
-  <!-- JavaScript: hace que los botones muestren los productos sin cambiar de página -->
-  <script>
-    var pantallaInicio = document.getElementById('inicio');
-    var pantallaProductos = document.getElementById('productos');
-    var lateral = document.getElementById('lateral');
-
-    // Volver a las 6 categorías
-    function mostrarInicio() {
-      pantallaInicio.classList.remove('oculto');
-      pantallaProductos.classList.add('oculto');
-      document.getElementById('texto-busqueda').value = '';
-    }
-
-    // Mostrar los productos de una categoría ('todos' = todos los productos)
-    function mostrarProductos(categoria, nombre, descripcion) {
-      pantallaInicio.classList.add('oculto');
-      pantallaProductos.classList.remove('oculto');
-
-      if (categoria == 'todos') {
-        lateral.classList.add('oculto');
-        pantallaProductos.className = 'sin-lateral';
-      } else {
-        lateral.classList.remove('oculto');
-        pantallaProductos.className = 'con-lateral';
-        document.getElementById('migas-nombre').textContent = nombre;
-        document.getElementById('titulo-categoria').textContent = nombre;
-        document.getElementById('descripcion-categoria').textContent = descripcion;
-      }
-
-      filtrar(categoria, '');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // Buscador
-    function buscar() {
-      var texto = document.getElementById('texto-busqueda').value.toLowerCase();
-      pantallaInicio.classList.add('oculto');
-      pantallaProductos.classList.remove('oculto');
-      lateral.classList.add('oculto');
-      pantallaProductos.className = 'sin-lateral';
-      filtrar('todos', texto);
-    }
-
-    // Muestra solo los productos que corresponden
-    function filtrar(categoria, texto) {
-      var lista = document.querySelectorAll('.producto');
-      var visibles = 0;
-
-      for (var i = 0; i < lista.length; i++) {
-        var esDeLaCategoria = (categoria == 'todos') || lista[i].classList.contains(categoria);
-        var coincide = lista[i].textContent.toLowerCase().indexOf(texto) != -1;
-
-        if (esDeLaCategoria && coincide) {
-          lista[i].classList.remove('oculto');
-          visibles++;
-        } else {
-          lista[i].classList.add('oculto');
-        }
-      }
-
-      if (visibles == 0) {
-        document.getElementById('vacio').classList.remove('oculto');
-      } else {
-        document.getElementById('vacio').classList.add('oculto');
-      }
-    }
-  </script>
+  <!-- Archivo con el JavaScript -->
+  <script src="script.js"></script>
 </body>
 </html>
