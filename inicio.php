@@ -511,6 +511,10 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
   </div>
 </header>
 
+<div>
+
+    </div>
+
 <main id="contenido">
   <?= $hayFiltro ? seccion_productos($categoria, $buscar) : grilla_html() ?>
 </main>
