@@ -152,7 +152,7 @@ if (isset($_GET['ajax'])) {
 :root {
   --bordo: #4f2622;
   --dorado: #deb94f;
-  --rojo-logo: #8f0b0b;
+  --rojo-logo: #804d49;
   --gris: #b1b1b1;
   --deco: "Almendra", Georgia, serif;
   --titulo: "Montserrat", Arial, sans-serif;
@@ -495,7 +495,6 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
       <span class="logo-texto">La Reliquia <small>antigüedades</small></span>
     <?php endif; ?>
   </a>
-
   <div class="acciones">
     <a class="carrito" href="carrito.php" aria-label="Carrito">
       <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
