@@ -495,12 +495,6 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
       <span class="logo-texto">La Reliquia <small>antigüedades</small></span>
     <?php endif; ?>
   </a>
-  <nav class="menu" aria-label="Principal">
-  <a href="inicio.php" data-cargar>Inicio</a>
-  <a href="inicio.php?categoria=todos" data-cargar>Productos</a>
-  <a href="#seccion-pie">Contacto</a>
-</nav>
-
   <div class="acciones">
     <a class="carrito" href="carrito.php" aria-label="Carrito">
       <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -511,9 +505,11 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
   </div>
 </header>
 
-<div>
-
-    </div>
+<nav class="menu" aria-label="Principal">
+  <a href="inicio.php" data-cargar>Inicio</a>
+  <a href="inicio.php?categoria=todos" data-cargar>Productos</a>
+  <a href="#seccion-pie">Contacto</a>
+</nav>
 
 <main id="contenido">
   <?= $hayFiltro ? seccion_productos($categoria, $buscar) : grilla_html() ?>
