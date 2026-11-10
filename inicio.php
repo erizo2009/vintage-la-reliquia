@@ -146,6 +146,7 @@ if (isset($_GET['ajax'])) {
   <title>La Reliquia - Antigüedades</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="icon" type="image/png" href="favicon-16x16.png">
   <link href="https://fonts.googleapis.com/css2?family=Almendra:wght@400;700&family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
   <style>
 :root {
@@ -496,13 +497,6 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
   </a>
 
   <div class="acciones">
-    <?php if ($logueado): ?>
-      <a href="cerrar_sesion.php">Cerrar sesión</a>
-    <?php else: ?>
-      <a href="registro.php">Crear cuenta</a>
-      <span class="sep" aria-hidden="true"></span>
-      <a href="login.php">Iniciar sesión</a>
-    <?php endif; ?>
     <a class="carrito" href="carrito.php" aria-label="Carrito">
       <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
         <path d="M2 3h3l2.6 12.2a1 1 0 0 0 1 .8h9.4a1 1 0 0 0 1-.8L21 7H6"/>
