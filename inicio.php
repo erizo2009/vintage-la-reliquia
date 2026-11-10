@@ -37,7 +37,7 @@ function productos_lista() {
     ['nombre' => 'Mesa de comedor francesa tallada', 'descripcion' => '', 'precio' => 1400000, 'categoria' => 'comedor', 'imagen' => 'mesa-francesa-tallada.jpg'],
     ['nombre' => 'Juego de 6 sillas de roble', 'descripcion' => '', 'precio' => 990000, 'categoria' => 'comedor', 'imagen' => 'sillas-roble.jpg'],
   ]
-};
+}
 
 
 
