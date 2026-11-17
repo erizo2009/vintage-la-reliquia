@@ -85,20 +85,7 @@ function seccion_productos($categoria, $buscar) {
     $filas[] = $p;
   }
 
-// Sugerencias del buscador (autocompletado)
-if (isset($_GET['sugerir'])) {
-  header('Content-Type: application/json; charset=UTF-8');
-  $q = trim($_GET['sugerir']);
-  $res = [];
-  if ($q !== '') {
-    foreach (productos_lista() as $p) {
-      if (mb_stripos($p['nombre'], $q) !== false) $res[] = $p['nombre'];
-      if (count($res) >= 6) break;
-    }
-  }
-  echo json_encode($res, JSON_UNESCAPED_UNICODE);
-  exit;
-}
+
 
   ob_start(); ?>
   <section class="lista-productos<?= $esCategoria ? ' con-lateral' : '' ?>">
@@ -112,6 +99,19 @@ if (isset($_GET['sugerir'])) {
       <button type="button" class="volver" data-volver>← Volver a las categorías</button>
       <h1 class="titulo-seccion"><?= $titulo ?></h1>
     <?php endif; ?>
+  <?php if (isset($_GET['sugerir'])) {
+  header('Content-Type: application/json; charset=UTF-8');
+  $q = trim($_GET['sugerir']);
+  $res = [];
+  if ($q !== '') {
+    foreach (productos_lista() as $p) {
+      if (mb_stripos($p['nombre'], $q) !== false) $res[] = $p['nombre'];
+      if (count($res) >= 6) break;
+    }
+  }
+  echo json_encode($res, JSON_UNESCAPED_UNICODE);
+  exit;
+} 
 
     <div class="zona-lista">
     <?php if (!$filas): ?>
