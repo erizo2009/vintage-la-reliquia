@@ -4,9 +4,11 @@ require_once 'datos.php';
 
 function h($t) { return htmlspecialchars((string)$t, ENT_QUOTES, 'UTF-8'); }
 
-$productos = productos_lista();
-if (!isset($_SESSION['carrito']) || !is_array($_SESSION['carrito'])) {
-  $_SESSION['carrito'] = [];
+foreach (productos_lista() as $idx => $p) {
+    if ($categoria !== '' && $categoria !== 'todos' && $p['categoria'] !== $categoria) continue;
+    if ($buscar !== '' && mb_stripos($p['nombre'] . ' ' . $p['descripcion'], $buscar) === false) continue;
+    $p['id'] = $idx;
+    $filas[] = $p;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
