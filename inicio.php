@@ -537,8 +537,8 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
   </div>
 </section>
 
-<footer class="pie" id="contacto">
-  <div class="pie-interior">
+<footer class="pie" >
+  <div class="pie-interior" id="contacto">
     <div>
       <h2>Contactanos</h2>
       <ul>
