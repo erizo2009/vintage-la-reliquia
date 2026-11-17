@@ -71,7 +71,7 @@ $wa = 'https://wa.me/54224894017?text=' . rawurlencode($msg);
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="icon" type="image/png" href="favicon-16x16.png">
   <link href="https://fonts.googleapis.com/css2?family=Almendra:wght@400;700&family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="carrito.css">
+  <link rel="stylesheet" href="css/carrito.css">
 </head>
 <body>
 
@@ -104,11 +104,6 @@ $wa = 'https://wa.me/54224894017?text=' . rawurlencode($msg);
   </div>
 </header>
 
-<nav class="menu" aria-label="Principal">
-  <a href="inicio.php">Inicio</a>
-  <a href="inicio.php?categoria=todos">Productos</a>
-  <a href="#contacto">Contacto</a>
-</nav>
 
 <main class="fondo-carrito">
 <?php if (!$items): ?>
