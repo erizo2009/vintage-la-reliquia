@@ -125,7 +125,21 @@ function seccion_productos($categoria, $buscar) {
   </section>
   <?php
   return ob_get_clean();
+}// Sugerencias del buscador (autocompletado)
+if (isset($_GET['sugerir'])) {
+  header('Content-Type: application/json; charset=UTF-8');
+  $q = trim($_GET['sugerir']);
+  $res = [];
+  if ($q !== '') {
+    foreach (productos_lista() as $p) {
+      if (mb_stripos($p['nombre'], $q) !== false) $res[] = $p['nombre'];
+      if (count($res) >= 6) break;
+    }
+  }
+  echo json_encode($res, JSON_UNESCAPED_UNICODE);
+  exit;
 }
+
 
 
 $categoria = trim($_GET['categoria'] ?? '');
