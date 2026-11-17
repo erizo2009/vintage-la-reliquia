@@ -538,7 +538,7 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
 </section>
 
 <footer class="pie" >
-  <div class="pie-interior" id="contacto">
+  <div class="pie-interior" >
     <div>
       <h2>Contactanos</h2>
       <ul>
@@ -556,7 +556,7 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
         </li>
       </ul>
     </div>
-    <div>
+    <div id="contacto">
       <h2>Redes sociales</h2>
       <ul>
         <li>
