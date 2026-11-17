@@ -3,16 +3,14 @@ session_start();
 require_once 'datos.php';   
 
 function h($t) { return htmlspecialchars((string)$t, ENT_QUOTES, 'UTF-8'); }
-
 $productos = [];
-foreach (productos_lista() as $p) {
-    $productos[(int)$p['id']] = $p;
+foreach (productos_lista() as $idx => $p) {
+    $productos[$idx] = $p;
 }
 
 if (!isset($_SESSION['carrito']) || !is_array($_SESSION['carrito'])) {
     $_SESSION['carrito'] = [];
 }
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $accion = $_POST['accion'] ?? '';
   $id     = (int)($_POST['id'] ?? -1);

@@ -57,12 +57,12 @@ function seccion_productos($categoria, $buscar) {
   global $descripciones;
   $esCategoria = ($buscar === '' && $categoria !== '' && $categoria !== 'todos');
   $filas = [];
-  foreach (productos_lista() as $p) {
+ foreach (productos_lista() as $idx => $p) {
     if ($categoria !== '' && $categoria !== 'todos' && $p['categoria'] !== $categoria) continue;
     if ($buscar !== '' && mb_stripos($p['nombre'] . ' ' . $p['descripcion'], $buscar) === false) continue;
- 
+    $p['id'] = $idx;
     $filas[] = $p;
-  }
+}
 
   if ($buscar !== '')            $titulo = 'Resultados para “' . h($buscar) . '”';
   elseif ($categoria === 'todos') $titulo = 'Todos los productos';
