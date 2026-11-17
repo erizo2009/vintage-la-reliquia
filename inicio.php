@@ -135,7 +135,7 @@ if (isset($_GET['ajax'])) {
   <style>
 :root {
   --bordo: #4f2622;
-  --dorado: #000000;
+  --dorado: #eeb844;
   --rojo-logo: #804d49;
   --gris: #b1b1b1;
   --deco: "Almendra", Georgia, serif;
