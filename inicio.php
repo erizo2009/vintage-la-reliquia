@@ -60,7 +60,7 @@ function seccion_productos($categoria, $buscar) {
   foreach (productos_lista() as $p) {
     if ($categoria !== '' && $categoria !== 'todos' && $p['categoria'] !== $categoria) continue;
     if ($buscar !== '' && mb_stripos($p['nombre'] . ' ' . $p['descripcion'], $buscar) === false) continue;
-    $p['id'] = $idx;
+ 
     $filas[] = $p;
   }
 
