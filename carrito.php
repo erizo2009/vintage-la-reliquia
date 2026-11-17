@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'datos.php';   // productos_lista(), imagen(), imagenes_base64()
+require_once 'datos.php';   
 
 function h($t) { return htmlspecialchars((string)$t, ENT_QUOTES, 'UTF-8'); }
 
@@ -9,7 +9,6 @@ if (!isset($_SESSION['carrito']) || !is_array($_SESSION['carrito'])) {
   $_SESSION['carrito'] = [];
 }
 
-/* ---------- Acciones (POST) ---------- */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $accion = $_POST['accion'] ?? '';
   $id     = (int)($_POST['id'] ?? -1);
@@ -39,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   exit;
 }
 
-/* ---------- Armar el carrito ---------- */
+
 $items = [];
 $total = 0;
 $cantidadTotal = 0;
@@ -54,7 +53,7 @@ foreach ($_SESSION['carrito'] as $id => $cant) {
 
 function precio($n) { return '$' . number_format((float)$n, 0, ',', '.'); }
 
-/* Mensaje de WhatsApp con el pedido */
+
 $msg = "Hola! Quiero consultar por estos productos:\n";
 foreach ($items as $it) {
   $msg .= "- {$it['cant']} x {$it['p']['nombre']} (" . precio($it['p']['precio']) . ")\n";
