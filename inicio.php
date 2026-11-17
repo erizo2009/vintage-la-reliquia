@@ -85,7 +85,9 @@ function seccion_productos($categoria, $buscar) {
     $filas[] = $p;
   }
 
-
+  if ($buscar !== '')            $titulo = 'Resultados para “' . h($buscar) . '”';
+  elseif ($categoria === 'todos') $titulo = 'Todos los productos';
+  else                            $titulo = h(etiqueta_categoria($categoria));
 
   ob_start(); ?>
   <section class="lista-productos<?= $esCategoria ? ' con-lateral' : '' ?>">
@@ -99,10 +101,7 @@ function seccion_productos($categoria, $buscar) {
       <button type="button" class="volver" data-volver>← Volver a las categorías</button>
       <h1 class="titulo-seccion"><?= $titulo ?></h1>
     <?php endif; ?>
-   
 
-
-    
     <div class="zona-lista">
     <?php if (!$filas): ?>
       <p class="vacio">No se encontraron productos.</p>
@@ -129,23 +128,10 @@ function seccion_productos($categoria, $buscar) {
 }
 
 
-
 $categoria = trim($_GET['categoria'] ?? '');
 $buscar    = trim($_GET['q'] ?? '');
 $hayFiltro = ($categoria !== '' || $buscar !== '');
-if (isset($_GET['sugerir'])) {
-  header('Content-Type: application/json; charset=UTF-8');
-  $q = trim($_GET['sugerir']);
-  $res = [];
-  if ($q !== '') {
-    foreach (productos_lista() as $p) {
-      if (mb_stripos($p['nombre'], $q) !== false) $res[] = $p['nombre'];
-      if (count($res) >= 6) break;
-    }
-  }
-  echo json_encode($res, JSON_UNESCAPED_UNICODE);
-  exit;
-}
+
 
 if (isset($_GET['ajax'])) {
   echo $hayFiltro ? seccion_productos($categoria, $buscar) : grilla_html();
