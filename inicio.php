@@ -95,6 +95,11 @@ function seccion_productos($categoria, $buscar) {
             <h2><?= h($p['nombre']) ?></h2>
             <p class="desc"><?= h($p['descripcion']) ?></p>
             <p class="precio">$<?= number_format((float)$p['precio'], 0, ',', '.') ?> ars</p>
+            <form method="post" action="carrito.php">
+  <input type="hidden" name="accion" value="agregar">
+  <input type="hidden" name="id" value="<?= (int)$p['id'] ?>">
+  <button type="submit" class="btn-agregar">Agregar al carrito</button>
+</form>
           </article>
         <?php endforeach; ?>
       </div>
@@ -353,6 +358,19 @@ a { color: inherit; text-decoration: none; }
   .grilla-productos { grid-template-columns: 1fr; }
 }
 
+.btn-agregar {
+  margin-top: 12px;
+  padding: 10px 20px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--bordo);
+  color: #fff;
+  font-family: var(--deco);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background .2s;
+}
+.btn-agregar:hover { background: #6b3530; }
 
 .volver {
   display: inline-block;
