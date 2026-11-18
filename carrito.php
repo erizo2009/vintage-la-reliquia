@@ -1,16 +1,15 @@
 <?php
 session_start();
-require_once 'datos.php';   
+require_once 'datos.php';   // productos_lista(), imagen(), imagenes_base64()
 
 function h($t) { return htmlspecialchars((string)$t, ENT_QUOTES, 'UTF-8'); }
-$productos = [];
-foreach (productos_lista() as $p) {
-    $productos[(int)$p['id']] = $p;
+
+$productos = productos_lista();
+if (!isset($_SESSION['carrito']) || !is_array($_SESSION['carrito'])) {
+  $_SESSION['carrito'] = [];
 }
 
-if (!isset($_SESSION['carrito']) || !is_array($_SESSION['carrito'])) {
-    $_SESSION['carrito'] = [];
-}
+/* ---------- Acciones (POST) ---------- */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $accion = $_POST['accion'] ?? '';
   $id     = (int)($_POST['id'] ?? -1);
@@ -40,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   exit;
 }
 
-
+/* ---------- Armar el carrito ---------- */
 $items = [];
 $total = 0;
 $cantidadTotal = 0;
@@ -55,7 +54,7 @@ foreach ($_SESSION['carrito'] as $id => $cant) {
 
 function precio($n) { return '$' . number_format((float)$n, 0, ',', '.'); }
 
-
+/* Mensaje de WhatsApp con el pedido */
 $msg = "Hola! Quiero consultar por estos productos:\n";
 foreach ($items as $it) {
   $msg .= "- {$it['cant']} x {$it['p']['nombre']} (" . precio($it['p']['precio']) . ")\n";
@@ -73,7 +72,7 @@ $wa = 'https://wa.me/54224894017?text=' . rawurlencode($msg);
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="icon" type="image/png" href="favicon-16x16.png">
   <link href="https://fonts.googleapis.com/css2?family=Almendra:wght@400;700&family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/carrito.css">
+  <link rel="stylesheet" href="carrito.css">
 </head>
 <body>
 
@@ -106,6 +105,11 @@ $wa = 'https://wa.me/54224894017?text=' . rawurlencode($msg);
   </div>
 </header>
 
+<nav class="menu" aria-label="Principal">
+  <a href="inicio.php">Inicio</a>
+  <a href="inicio.php?categoria=todos">Productos</a>
+  <a href="#contacto">Contacto</a>
+</nav>
 
 <main class="fondo-carrito">
 <?php if (!$items): ?>
