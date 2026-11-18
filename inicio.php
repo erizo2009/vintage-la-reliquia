@@ -54,13 +54,13 @@ function grilla_html() {
 
 
 function seccion_productos($categoria, $buscar) {
-  global $descripciones;
+  global $descripciones, $logueado;
   $esCategoria = ($buscar === '' && $categoria !== '' && $categoria !== 'todos');
   $filas = [];
  foreach (productos_lista() as $idx => $p) {
     if ($categoria !== '' && $categoria !== 'todos' && $p['categoria'] !== $categoria) continue;
     if ($buscar !== '' && mb_stripos($p['nombre'] . ' ' . $p['descripcion'], $buscar) === false) continue;
-    $p['id'] = $idx;
+   
     $filas[] = $p;
 }
 
@@ -82,6 +82,9 @@ function seccion_productos($categoria, $buscar) {
     <?php endif; ?>
 
     <div class="zona-lista">
+      <?php if ($logueado): ?>
+  <a class="btn-admin" href="admin_productos.php">+ Agregar producto</a>
+<?php endif; ?>
     <?php if (!$filas): ?>
       <p class="vacio">No se encontraron productos.</p>
     <?php else: ?>
@@ -100,6 +103,16 @@ function seccion_productos($categoria, $buscar) {
   <input type="hidden" name="accion" value="agregar">
   <input type="hidden" name="id" value="<?= (int)$p['id'] ?>">
   <button type="submit" class="btn-agregar">Agregar al carrito</button>
+  <?php if ($logueado): ?>
+  <div class="admin-acciones">
+    <a class="btn-admin" href="admin_productos.php?editar=<?= (int)$p['id'] ?>">Editar</a>
+    <form method="post" action="admin_productos.php" onsubmit="return confirm('¿Eliminar este producto?')">
+      <input type="hidden" name="accion" value="eliminar">
+      <input type="hidden" name="id" value="<?= (int)$p['id'] ?>">
+      <button type="submit" class="btn-admin peligro">Eliminar</button>
+    </form>
+  </div>
+<?php endif; ?>
 </form>
           </article>
         <?php endforeach; ?>
