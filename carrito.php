@@ -4,7 +4,7 @@ require_once 'datos.php';
 
 function h($t) { return htmlspecialchars((string)$t, ENT_QUOTES, 'UTF-8'); }
 $productos = [];
-foreach (productos_lista() as $p) {
+foreach (productos() as $p) {
     $productos[(int)$p['id']] = $p;
 }
 
