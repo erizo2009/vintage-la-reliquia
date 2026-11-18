@@ -1,5 +1,13 @@
-<?php 
-function productos_lista() {
+<?php  
+function conexion() {
+  static $pdo = null;
+  if ($pdo === null) {
+    $pdo = new PDO('mysql:host=localhost;dbname=vintage;charset=utf8mb4', 'root', '', [
+      PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+      PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    ]);
+  }
+  
   return [
     ['nombre' => 'Sillones de salon estilo Luis xv', 'descripcion' => '', 'precio' => 2200000, 'categoria' => 'living', 'imagen' => 'sillones.jpg'],
     ['nombre' => 'Mesa antigua de caoba', 'descripcion' => '', 'precio' => 980000, 'categoria' => 'living', 'imagen' => 'mesa-caoba.jpg'],
@@ -11,6 +19,13 @@ function productos_lista() {
     ['nombre' => 'Mesa de comedor francesa tallada', 'descripcion' => '', 'precio' => 1400000, 'categoria' => 'comedor', 'imagen' => 'mesa-francesa-tallada.jpg'],
     ['nombre' => 'Juego de 6 sillas de roble', 'descripcion' => '', 'precio' => 990000, 'categoria' => 'comedor', 'imagen' => 'sillas-roble.jpg'],
   ];
+  function imagen($nombre) {
+  static $mapa = null;
+  if ($mapa === null) $mapa = imagenes_base64();
+  if (isset($mapa[$nombre])) return $mapa[$nombre];
+  if ($nombre !== '' && is_file(__DIR__ . '/img/' . $nombre)) return 'img/' . rawurlencode($nombre);
+  return '';
+}
 }
 function imagen($nombre) {
   static $mapa = null;
