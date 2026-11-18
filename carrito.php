@@ -4,8 +4,8 @@ require_once 'datos.php';
 
 function h($t) { return htmlspecialchars((string)$t, ENT_QUOTES, 'UTF-8'); }
 $productos = [];
-foreach (productos_lista() as $idx => $p) {
-    $productos[$idx] = $p;
+foreach (productos_lista() as $p) {
+    $productos[(int)$p['id']] = $p;
 }
 
 if (!isset($_SESSION['carrito']) || !is_array($_SESSION['carrito'])) {
