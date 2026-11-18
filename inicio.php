@@ -639,10 +639,7 @@ window.addEventListener('popstate', () => {
   if (p.get('q')) datos.set('q', p.get('q'));
   cargar(datos.toString(), false);
 });
-.admin-acciones { display:flex; gap:8px; margin-top:10px; }
-.btn-admin { display:inline-block; padding:8px 14px; border:0; border-radius:8px; background:#804d49; color:#fff; font-family:var(--deco); font-size:1.1rem; cursor:pointer; }
-.btn-admin.peligro { background:#a32d2d; }
-.zona-lista > .btn-admin { margin-bottom:18px; }
+
 </script>
 
 </body>
